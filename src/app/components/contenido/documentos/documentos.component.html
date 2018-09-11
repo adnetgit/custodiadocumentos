@@ -1,0 +1,268 @@
+<div class="card card-table">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-5 mt-2">
+                <h3>
+                    <i class="fas fa-file-archive"></i> Administrar Documentos
+                    <i data-target="#modalAgregarEspacio" data-toggle="modal" (click)="limpiarDocumento()" class="fa fa-plus-circle text-success mas"></i>
+                </h3>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+        <eui-tabs (tabClose)="cerrarTab($event)">
+            <eui-tab-panel [title]="'Espacios'">
+
+                <eui-datagrid [data]="espacios" selectionMode="single" [(selection)]="espacioSeleccionado" style="max-height:425px;">
+                    <eui-grid-column field="bucketId" title="Espacio" align="center"></eui-grid-column>
+                    <eui-grid-column field="rutEmpresa" title="Rut de la Empresa" align="center"></eui-grid-column>
+                    <eui-grid-column field="region" title="Región" align="center"></eui-grid-column>
+                </eui-datagrid>
+                <br>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-outline-success" (click)="seleccionarEspacio(espacioSeleccionado)">
+                        <i class="fas fa-eye"></i> Ver Espacio
+                    </button>
+                    <button type="button" data-target="#modalEliminarEspacio" data-toggle="modal" class="btn btn-outline-danger">
+                        <i class="fas fa-trash"></i> Eliminar Espacio
+                    </button>
+                </div>
+            </eui-tab-panel>
+
+
+            <eui-tab-panel *ngIf="seleccionEspacio" [closable]="true" [title]="espacio.bucketId">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label>Espacio </label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>: {{espacio.bucketId}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label>Rut de Empresa</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>: {{espacio.rutEmpresa}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label>Region</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>: {{espacio.region}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="position:relative;right:-635px">
+                            <button type="button" class="btn btn-outline-success" data-target="#modalEditarEspacio" data-toggle="modal">
+                                <i class="fas fa-edit"></i> Agregar Archivo
+                            </button>
+                        </div>
+                        <div class="col-md-4" style="position:relative;right:-635px">
+                            <button type="button" class="btn btn-outline-info" data-target="#modalEditarEspacio" data-toggle="modal">
+                                <i class="fas fa-edit"></i> Editar Espacio
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="col-md-4 offset-3">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="combo">Tipo de Documento</label>
+                                </div>
+                                <select #tipo (change)="obtenerAtriTiposDocs(tipo.value)" class="custom-select" id="inputTipo">
+                                    <option value="-1" selected>Escoger...</option>
+                                    <option value="item.tipoId" *ngFor="let item of tiposDocs">{{item.nombreTipo}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div *ngIf="Metadatos != ''" class="row justify-content-center border-bottom mb-2">
+                            <h5>Metadatos</h5>
+                        </div>
+                        <div class="row justify-content-center">
+                            <input class="form-control mr-2" *ngFor="let metadato of Metadatos" type="search" name="{{metadato.Nombre}}" id="{{metadato.Nombre}}"
+                                placeholder="{{metadato.Nombre}}">
+                        </div>
+                        <br>
+                        <eui-tabs>
+                            <eui-tab-panel [title]="'Documentos'">
+                                <eui-datagrid [data]="documentos" selectionMode="single" [(selection)]="documentoSeleccionado" style="max-height:425px;">
+                                    <eui-grid-column field="nombreArchivo" title="Nombre" align="center"></eui-grid-column>
+                                    <eui-grid-column field="tipoId" title="Tipo de Documento" align="center"></eui-grid-column>
+                                    <eui-grid-column field="extension" title="Extensión" align="center"></eui-grid-column>
+                                </eui-datagrid>
+                                <br>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-outline-info">
+                                        <i class="fas fa-edit"></i> Editar Archivo
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger">
+                                        <i class="fas fa-trash"></i> Eliminar Archivo
+                                    </button>
+                                </div>
+                            </eui-tab-panel>
+                        </eui-tabs>
+                    </div>
+                </div>
+            </eui-tab-panel>
+
+        </eui-tabs>
+    </div>
+    <div class="card-footer">
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal Agregar Espacio-->
+<div class="modal fade" id="modalAgregarEspacio" tabindex="-1" role="dialog" aria-labelledby="agregarEspacio" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nuevaEmpresa">Agregar nuevo Espacio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <label>Nombre:
+                        <eui-textbox [(ngModel)]="agregarEspacio.BucketId" placeholder="Nuevo Espacio"></eui-textbox>
+                    </label>
+                </div>
+                <div class="row">
+                    <label>Empresa:
+                        <eui-textbox [(ngModel)]="agregarEspacio.RutEmpresa"></eui-textbox>
+                    </label>
+                </div>
+
+                <div class="row">
+                    <label>Region:
+                        <eui-textbox [(ngModel)]="agregarEspacio.Region"></eui-textbox>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-modal" data-dismiss="modal" (click)="agregarEspacios()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar Espacio-->
+<div class="modal fade" id="modalEditarEspacio" tabindex="-1" role="dialog" aria-labelledby="editarEspacio" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nuevaEmpresa">Agregar nuevo Espacio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <label>Nombre:
+                        <eui-textbox [(ngModel)]="editarEspacio.BucketId" [value]="espacio.bucketId" disabled="disabled"></eui-textbox>
+                    </label>
+                </div>
+                <div class="row">
+                    <label>Empresa:
+                        <eui-textbox [(ngModel)]="editarEspacio.RutEmpresa" [value]="espacio.rutEmpresa"></eui-textbox>
+                    </label>
+                </div>
+
+                <div class="row">
+                    <label>Region:
+                        <eui-textbox [(ngModel)]="editarEspacio.Region" [value]="espacio.region"></eui-textbox>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-modal" data-dismiss="modal" data-target="#modalConfEditarEspacio" data-toggle="modal">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Confirmacion Editar Espacio -->
+<div class="modal fade" id="modalConfEditarEspacio" tabindex="-1" role="dialog" aria-labelledby="eliminarEspacio" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Eliminar Espacio</h3>
+            </div>
+            <div class="modal-body">
+                <label>¿Seguro que desea eliminar este Espacio?</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editarTiposDocs()">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Confirmacion Eliminar Espacio -->
+<div class="modal fade" id="modalEliminarEspacio" tabindex="-1" role="dialog" aria-labelledby="eliminarEspacio" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Eliminar Espacio</h3>
+            </div>
+            <div class="modal-body">
+                <label>¿Seguro que desea eliminar este Espacio?</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminarEspacios(espacioSeleccionado)">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Agregar Arcivo-->
+<div class="modal fade" id="modalAgregarArchivo" tabindex="-1" role="dialog" aria-labelledby="agregarArchivo" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nuevaEmpresa">Agregar nuevo Archivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <label>Nombre:
+                        <input type="file" (change)="onArchivoSeleccionado($event)">
+                    </label>
+                </div>
+                <div class="row">
+                    <label>Empresa:
+                        <eui-textbox [(ngModel)]="agregarEspacio.RutEmpresa"></eui-textbox>
+                    </label>
+                </div>
+
+                <div class="row">
+                    <label>Region:
+                        <eui-textbox [(ngModel)]="agregarEspacio.Region"></eui-textbox>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-modal" data-dismiss="modal" (click)="agregarEspacios()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>

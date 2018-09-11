@@ -1,0 +1,52 @@
+<div class="alert alert-dismissible {{aux}} "  role="alert">
+  <strong>Alerta!!</strong>{{textoAlert}}
+  <button type="button" class="close" (click)="cerrarAlert()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<h1>
+  <strong>Crear Nuevo Usuario</strong>
+</h1>
+<form>
+  <fieldset>
+    <p>
+      <label>Nombre:</label>
+    </p>
+    <p>
+      <input type="text" (input)="nombre($event)" [value]=""  placeholder="Nombre Usuario">
+    </p>
+    <p>
+      <label>Apellidos:</label>
+    </p>
+    <p>
+      <input type="text" (input)="apellido($event)" [value]=""  placeholder="Apellidos Usuario">
+    </p>
+    <p>
+      <label>Correo:</label>
+    </p>
+    <p>
+      <input type="email" (input)="correo($event)" [value]=""  placeholder="Correo Usuario" >
+    </p>
+    <p>
+      <label>Contraseña:</label>
+    </p>
+    <p>
+      <input type="password" (input)="contrasena($event)" [value]=""  placeholder="****">
+    </p>
+    <p>
+      <label>Repita Contraseña:</label>
+    </p>
+    <p>
+      <input type="password" required (input)="rcontrasena($event)" [value]="" placeholder="*****">
+    </p>
+
+    <p>
+      <button type="button" (click)="AgregarUsuario()" class="btn btn-modal">Aceptar</button>
+    </p>
+    <p>
+      <button type="button" (click)="volver()" class="btn btn-modal">Volver</button>
+    </p>
+  </fieldset>
+</form>
+

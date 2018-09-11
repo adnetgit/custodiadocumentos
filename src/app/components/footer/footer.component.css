@@ -1,0 +1,10 @@
+a{
+    color:white;    
+}
+.footer-copyright{
+    background-color: rgb(78, 101, 192);
+}
+.page-footer{
+    background-color: rgba(82, 102, 192, 0.9) !important;
+    padding-right: 0px !important;
+}

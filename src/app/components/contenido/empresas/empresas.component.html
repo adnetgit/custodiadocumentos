@@ -1,0 +1,522 @@
+<div class="card card-table">
+  <div class="card-header">
+    <div class="row ">
+      <div class="col-md-5 mt-2">
+        <h3>
+          <i class="fa fa-briefcase"></i> Administrar Empresas
+          <i data-target="#modalAgregarEmpr" data-toggle="modal" class="fa fa-plus-circle text-success mas"></i>
+        </h3>
+      </div>
+      <div class="col-md-3 offset-4">
+        <input type="text" class="form-control buscar" (keyup)="filtro($event)" placeholder="Buscar empresa">
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <eui-tabs (tabClose)="cerrarTab($event)">
+      <eui-tab-panel [title]="'Empresas'">
+        <eui-datagrid [data]="empresas" selectionMode="single" [(selection)]="empresaSeleccionada" style="max-height:425px;">
+          <eui-grid-column field="nombreEmpresa" title="Nombre" align="center"></eui-grid-column>
+          <eui-grid-column field="rutEmpresa" title="Rut" align="center"></eui-grid-column>
+        </eui-datagrid>
+        <br>
+        <div class="pull-right">
+          <button [disabled]="!empresaSeleccionada.nombreEmpresa.length > 0" type="button" class="btn btn-outline-success" (click)="seleccionarEmpresa(empresaSeleccionada)">
+            <i class="fas fa-eye"></i> Ver Empresa
+          </button>
+
+          <button [disabled]="!empresaSeleccionada.rutEmpresa.length > 0" type="button" class="btn btn-outline-danger">
+            <i class="fas fa-trash"></i> Eliminar Empresa
+          </button>
+        </div>
+      </eui-tab-panel>
+      <eui-tab-panel *ngIf="seleccionEmpresa" [closable]="true" [title]="empresa.nombreEmpresa">
+        <div class="card card-table">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-1">
+                <label>Empresa</label>
+              </div>
+              <div class="col-md-2">
+                <label>: {{empresa.nombreEmpresa}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1">
+                <label>Rut</label>
+              </div>
+              <div class="col-md-2">
+                <label>: {{empresa.rutEmpresa}}</label>
+              </div>
+            </div>
+
+            <div class="col-md-4" style="position:relative;right:-685px">
+              <button type="button" class="btn btn-outline-info" data-target="#modalEditarEmpresa" data-toggle="modal" (click)="editarEmpresa(empresaSeleccionada)">
+                <i class="fas fa-edit"></i> Editar Empresa
+              </button>
+            </div>
+
+          </div>
+          <div class="card-body">
+            <eui-tabs>
+              <eui-tab-panel [title]="'Usuarios'">
+                <eui-datagrid [data]="usuarios" selectionMode="single" [(selection)]="usuarioSeleccionado" style="max-height:425px">
+                  <eui-grid-column field="nombreUsuario" title="Nombre" align="center"></eui-grid-column>
+                  <eui-grid-column field="rutUsuario" title="Rut" align="center"></eui-grid-column>
+
+                </eui-datagrid>
+
+
+                <br>
+
+                <div class="pull-right">
+                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-outline-success" (click)="seleccionarUsuario(usuarioSeleccionado)">
+                    <i class="fas fa-eye"></i> Ver Usuario
+                  </button>
+
+                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-outline-info" data-target="#modal" data-toggle="modal" data-target="#modalCambiarPass">
+                    <i class="fas fa-eye"></i> Cambiar Contraseña
+                  </button>
+
+
+                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalEliminarUsuario">
+                    <i class="fas fa-trash"></i> Eliminar Usuario
+                  </button>
+                </div>
+              </eui-tab-panel>
+              <eui-tab-panel [title]="'Espacios'">
+                <eui-datagrid [data]="espacios" selectionMode="single" [(selection)]="espacioSeleccionado" style="max-height:425px">
+                  <eui-grid-column field="bucketId" title="Bucket" align="center"></eui-grid-column>
+                  <eui-grid-column field="region" title="Region" align="center"></eui-grid-column>
+                </eui-datagrid>
+                <br>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-outline-success" (click)="seleccionarEspacio(espacioSeleccionado)">
+                    <i class="fas fa-eye"></i> Ver Espacio
+                  </button>
+                  <button type="button" class="btn btn-outline-info" data-target="#modal" data-toggle="modal" (click)="editarEspacio(espacioSeleccionado)">
+                    <i class="fas fa-edit"></i> Editar Espacio
+                  </button>
+                  <button type="button" class="btn btn-outline-danger">
+                    <i class="fas fa-trash"></i> Eliminar Espacio
+                  </button>
+                </div>
+              </eui-tab-panel>
+              <eui-tab-panel [title]="'Key'">
+                <div class="card card-table">
+                  <div class="card-header">
+                    <h3>Generar Key
+                      <i class="fa fa-key"></i>
+                    </h3>
+                  </div>
+                  <div class="card body">
+                    <div class="input-group my-2 col-md-10 offset-1">
+                      <input type="text" class="form-control" placeholder="XXXX-XXXX-XXXX" aria-label="Key" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                          <i class="fa fa-sync"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                  </div>
+                </div>
+              </eui-tab-panel>
+              <eui-tab-panel [title]="'Tipos de documentos'">
+                <eui-datagrid [data]="TiposDocs" selectionMode="single" [(selection)]="tipoSeleccionado">
+                  <eui-grid-column field="nombre" title="Nombre" align="center"></eui-grid-column>
+                </eui-datagrid>
+                <br>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-outline-success" (click)="seleccionarTipo(tipoSeleccionado)">
+                    <i class="fas fa-eye"></i> Ver Tipo de Documento
+                  </button>
+                  <button type="button" class="btn btn-outline-info" data-target="#modal" data-toggle="modal" (click)="editarTipo(tipoSeleccionado)">
+                    <i class="fas fa-edit"></i> Editar Tipo de Documento
+                  </button>
+                  <button type="button" class="btn btn-outline-danger">
+                    <i class="fas fa-trash"></i> Eliminar Tipo de Documento
+                  </button>
+                </div>
+              </eui-tab-panel>
+            </eui-tabs>
+          </div>
+        </div>
+      </eui-tab-panel>
+      <eui-tab-panel *ngIf="seleccionUsuario" [closable]="true" [title]="usuario.nombreUsuario">
+        <div class="card card-table">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-1">
+                <label>Nombre</label>
+              </div>
+              <div class="col-md-2">
+                <label>: {{usuario.nombreUsuario}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1">
+                <label>Rut</label>
+              </div>
+              <div class="col-md-2">
+                <label>: {{usuario.rutUsuario}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1">
+                <label>Empresa</label>
+              </div>
+              <div class="col-md-2">
+                <label>: {{empresa.nombreEmpresa}}</label>
+              </div>
+            </div>
+
+            <div class="col-md-4" style="position:relative;right:-685px">
+              <button type="button" class="btn btn-outline-info" data-target="#modalEditarUsuario" data-toggle="modal" (click)="editarUsuario(usuarioSeleccionado)">
+                <i class="fas fa-edit"></i> Editar Usuario
+              </button>
+            </div>
+
+          </div>
+          <div class="card-body">
+            <eui-tabs>
+              <eui-tab-panel [title]="'Perfiles'">
+                <eui-datagrid [data]="perfiles" selectionMode="single" [(selection)]="perfilSeleccionado" style="max-height:425px">
+                  <eui-grid-column field="nombrePerfil" title="Nombre" align="center"></eui-grid-column>
+                </eui-datagrid>
+                <br>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-outline-success" (click)="seleccionarPerfil(perfilSeleccionado)">
+                    <i class="fas fa-eye"></i> Ver Perfil
+                  </button>
+                  <button type="button" class="btn btn-outline-info" data-target="#modal" data-toggle="modal" (click)="editarPerfil()">
+                    <i class="fas fa-edit"></i> Editar Perfil
+                  </button>
+                  <button type="button" class="btn btn-outline-danger">
+                    <i class="fas fa-trash"></i> Eliminar Perfil
+                  </button>
+                </div>
+              </eui-tab-panel>
+              <eui-tab-panel [title]="'Actividades'">
+                <div class="row">
+                  <div class="col-md-5 offset-1">
+                    <div class="card card-table">
+                      <div class="card-header text-center">
+                        <h5>Último Inicio de sesión</h5>
+                      </div>
+                      <div class="card-body text-center">
+                        <div class="espera">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <i style="font-size: 30px" class="fas fa-user-clock text-info"></i>
+                            </div>
+                            <div class="col-md-8">
+                              <span>18/06/2018</span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-8 offset-4">
+                              <strong>
+                                <h3>17:44 </h3>
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="card card-table">
+                      <div class="card-header text-center">
+                        <h5>Documentos Descargados</h5>
+                      </div>
+                      <div class="card-body text-center">
+                        <div class="espera">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <i style="font-size: 30px;" class="fas fa-download text-success"></i>
+                            </div>
+                            <div class="col-md-8">
+                              <span>N° de documentos descargas hoy</span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-8 offset-4">
+                              <strong>
+                                <h3>150</h3>
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5 offset-1">
+                    <div class="card card-table">
+                      <div class="card-header text-center">
+                        <h5>Documentos Consultados</h5>
+                      </div>
+                      <div class="card-body text-center">
+                        <div class="espera">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <i style="font-size: 30px;" class="fas fa-eye text-success"></i>
+                            </div>
+                            <div class="col-md-8">
+                              <span>N° de documentos consultados hoy</span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-8 offset-4">
+                              <strong>
+                                <h3>501</h3>
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="card card-table">
+                      <div class="card-header text-center">
+                        <h5>Documentos Eliminados</h5>
+                      </div>
+                      <div class="card-body text-center">
+                        <div class="espera">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <i style="font-size: 30px;" class="fas fa-trash text-danger"></i>
+                            </div>
+                            <div class="col-md-8">
+                              <span>N° de documentos eliminados hoy</span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-8 offset-4">
+                              <strong>
+                                <h3>35</h3>
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </eui-tab-panel>
+            </eui-tabs>
+          </div>
+        </div>
+      </eui-tab-panel>
+    </eui-tabs>
+  </div>
+  <div class="card-footer">
+  </div>
+</div>
+
+<div class="modal fade" id="modalEditarEmpresa" tabindex="-1" role="dialog" aria-labelledby="nuevaEmpresa" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nuevaEmpresa">{{tituloModal}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <label>Nombre Empresa:
+              <eui-textbox [(ngModel)]="AuxEmpresa.NombreEmpresa" [placeholder]="empresaSeleccionada.nombreEmpresa"></eui-textbox>
+              <eui-addon>
+                <i class="fa fa-user mr-1"></i>
+              </eui-addon>
+            </label>
+          </div>
+          <div class="row pt-2">
+            <label>Rut Empresa:
+              <eui-textbox disabled="disables" [(ngModel)]="AuxEmpresa.RutEmpresa" [placeholder]="empresaSeleccionada.rutEmpresa"></eui-textbox>
+              <eui-addon>
+                <i class="fa fa-user mr-1"></i>
+              </eui-addon>
+            </label>
+          </div>
+          <div class="row pt-2">
+            
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal"  (click)="EditarEmpresa(empresaSeleccionada)">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="modalUsuarios" tabindex="-1" role="dialog" aria-labelledby="editarUsuarios" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nuevaEmpresa">Editar Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="modalAgregarEmpr" tabindex="-1" role="dialog" aria-labelledby="AgregarEmpr" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nuevaEmpresa">Agregar Empresa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <label>Nombre Empresa:
+            <eui-textbox id="nombreu" [(ngModel)]="AuxEmpresa.NombreEmpresa"></eui-textbox>
+            <eui-addon>
+              <i class="fa fa-user mr-1"></i>
+            </eui-addon>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Rut Empresa:
+            <eui-textbox [(ngModel)]="AuxEmpresa.RutEmpresa" ></eui-textbox>
+            <eui-addon>
+              <i class="fa fa-lock mr-1"></i>
+            </eui-addon>
+          </label>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal" (click)="AgregarEmpresa()">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalCambiarPass" tabindex="-1" role="dialog" aria-labelledby="CambiarPass" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nuevaEmpresa">Cambiar Contraseña</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <label>Nombre Usuario:
+            <eui-textbox [value]="usuarioSeleccionado.nombreUsuario" disabled=”disabled”></eui-textbox>
+            <eui-addon>
+              <i class="fa fa-user mr-1"></i>
+            </eui-addon>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Nueva Password:
+            <eui-textbox [(ngModel)]="auxUsuario.Password" ></eui-textbox>
+            <eui-addon>
+              <i class="fa fa-user mr-1"></i>
+            </eui-addon>
+          </label>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal" (click)="CambiarPass(usuarioSeleccionado)">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="eliminarUsuario" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Eliminar</h3>
+      </div>
+      <div class="modal-body">
+        <label>¿Seguro que desea eliminar este Usuario?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminarUsuario(usuarioSeleccionado)">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="eliminarUsuario" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Editar Usuario</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <label>Nombre Usuario:
+            <eui-textbox [(ngModel)]="auxUsuario.NombreUsuario" [placeholder]="usuarioSeleccionado.nombreUsuario"></eui-textbox>
+            <eui-addon>
+              <i class="fa fa-user mr-1"></i>
+            </eui-addon>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Rut Usuario:
+            <eui-textbox [(ngModel)]="auxUsuario.RutUsuario" [placeholder]="usuarioSeleccionado.rutUsuario"></eui-textbox>
+            <eui-addon>
+              <i class="fa fa-lock mr-1"></i>
+            </eui-addon>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Empresa:
+              <select #em (change)="CambiarComboEmpresa(em.value)" class="custom-select" id="inputEmpresa">
+                  <option value="0" selected>Escoger...</option>
+                  <option value="111.111.111">Claro</option>
+                  <option value="222.222.222">Vtr</option>
+                  <option value="333.333.333">Wom</option>
+                  <option value="444.444.444">Metlife</option>
+                  <option value="555.555.555">Jumbo</option>
+                  <option value="66.666.666-6">Entel</option>
+                  <option value="777.777.777">Lider</option>
+              </select>
+            
+          </label>
+        </div>
+      
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="EditarUsuario(usuarioSeleccionado)" data-dismiss="modal">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

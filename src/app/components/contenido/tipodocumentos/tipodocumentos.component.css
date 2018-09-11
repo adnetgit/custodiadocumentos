@@ -1,0 +1,88 @@
+.cardBox {
+    float: left;
+    font-size: 1.2em;
+    margin: 1% 0 0 1%;
+    perspective: 800px;
+    transition: all 0.3s ease 0s;
+    width: 100%;
+  }
+  .cardBox:hover .card {
+    transform: rotateY(180deg);
+  }
+  .card {
+    background: #222;
+    cursor: default;
+    height: 70px;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease 0s;
+    width: 100%;
+    -webkit-animation: giro 1s 1;
+    animation: giro 1s 1;
+    background: rgba(255,255,255,.6) !important;
+  }
+  .card-finish{
+    background: #222;
+    cursor: default;
+    height: 100px;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease 0s;
+    width: 100%;
+    -webkit-animation: giro 1s 1;
+    animation: giro 1s 1;
+    background: rgba(51,255,76,.6) !important;
+  }
+  
+.front, .back {
+  backface-visibility: hidden !important;
+  box-sizing: border-box;
+  display: block;
+  font-size: 1.2em;
+  height: 100%;
+  padding:  3px 0px 0px 13px;
+  position: absolute;
+ /* text-align: center;*/
+  width: 100%;
+  
+}
+.front:hover, .back:hover{
+    backface-visibility: hidden !important;
+}
+.back {
+    transform: rotateY( 180deg);
+}
+.txt-front{
+      width:24.5%;
+}
+.agregar{
+  padding: 4px 10px 4px 10px !important;
+  border-radius: 20px;
+  background-color:#4b578b ;
+  transition: .3s
+}
+.agregar:active{
+  background-color: #8196f3;
+}
+.card.card-table {
+  height: auto;
+  background: rgb(255,255,255) !important;  
+  border-top: 0px;
+}
+.row{
+  padding: 0px;
+  margin: 0px;
+}
+.col-md-5{
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+input.text { 
+  width: 13em;
+  height: 2em; 
+  }
+
+.lineal{
+  display: inline-block;  
+}
+
+

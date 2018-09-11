@@ -1,0 +1,52 @@
+a{
+    color:black;
+    text-decoration: none;
+    text-decoration-color: none;
+    text-decoration-line: none;
+    text-decoration-style: none;
+    transition: .5s;
+}
+a:hover{
+    color:grey;
+}
+.card{
+    margin-left:10px;
+    padding:3px;
+}
+
+/*---------------------------------------------------------------------------------*/
+
+.signOut {
+	background-color: #f10c0c;
+	border: none;
+	border-radius: 0px 3px 3px 0px;
+	-moz-border-radius: 0px 3px 3px 0px;
+	-webkit-border-radius: 0px 3px 3px 0px;
+	color: #f4f4f4;
+	cursor: pointer;
+	height: 50px;
+	text-transform: uppercase;
+	width: 250px;
+}
+
+
+.signOut:hover {
+	background-color: #ee1c1cd5;
+	border: none;
+	border-radius: 0px 3px 3px 0px;
+	-moz-border-radius: 0px 3px 3px 0px;
+	-webkit-border-radius: 0px 3px 3px 0px;
+	color: #f4f4f4;
+	cursor: pointer;
+	height: 50px;
+	text-transform: uppercase;
+	width: 250px;
+}
+
+.color-icon{
+	color: #f4f4f4;
+}
+
+
+
+

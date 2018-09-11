@@ -1,0 +1,69 @@
+<div class="card card-table bg-light">
+  <div class="card-header">
+    <h2>Usuarios</h2>
+  </div>
+  <div class="card-body">
+    <div>
+      <eui-datagrid [data]="data" >
+        <eui-grid-column field="id" title="Id" align="center"></eui-grid-column>
+        <eui-grid-column field="nombre" title="Nombre" align="center"></eui-grid-column>
+        <eui-grid-column field="rut" title="Rut" align="center"></eui-grid-column>
+        <eui-grid-column field="telefono" title="Teléfono" align="center"></eui-grid-column>
+        <eui-grid-column field="direccion" title="Dirección" align="center"></eui-grid-column>
+        <eui-grid-column title="Commands" align="center" >
+          <ng-template euiCellTemplate let-row>
+              <button type="button" class="btn btn-light" data-target="#nueva" data-toggle="modal" (click)="editarUsuario(row)">Editar</button>
+              <button type="button" class="btn btn-light" >Eliminar</button>
+          </ng-template>
+      </eui-grid-column>
+      </eui-datagrid>
+    </div>
+  </div>
+  <div class="card-footer">
+  </div>
+</div>
+
+<div class="modal fade" id="nueva" tabindex="-1" role="dialog" aria-labelledby="nuevaEmpresa" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nuevaEmpresa">Agregar nueva usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group pt-2">
+            <label for="inputNombre">Nombre
+              <i class="fa fa-briefcase"></i>
+            </label>
+            <input id="inputNombre" type="text" placeholder="Nombre" class="form-control" [value]="usuario.nombre">
+          </div>
+          <div class="form-group">
+            <label for="inputRut">Rut
+              <i class="fa fa-lock"></i>
+            </label>
+            <input id="inputRut" type="text" placeholder="Rut" class="form-control" [value]="usuario.rut">
+          </div>
+          <div class="form-group">
+            <label for="inputTelefono">Teléfono
+              <i class="fa fa-phone-square"></i>
+            </label>
+            <input id="inputTelefono" type="text" placeholder="Teléfono" class="form-control" [value]="usuario.telefono">
+          </div>
+          <div class="form-group pt-2">
+            <label for="inputDireccion">Dirección
+              <i class="fa fa-map-marker"></i>
+            </label>
+            <input id="inputDireccion" type="text" placeholder="Dirección" class="form-control" [value]="usuario.direccion">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

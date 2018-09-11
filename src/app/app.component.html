@@ -1,0 +1,20 @@
+<div class="container-fluid ">
+    <div class="row">
+        <div class="col-md-12 navbars fixed-top">
+            <app-navbar  *ngIf="loggedIn" ></app-navbar>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" >
+            <app-sidebar ></app-sidebar>
+        </div>
+        <div class="col-md-9 mt-6 contenido active">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 footer">
+            <app-footer></app-footer>
+        </div>
+    </div>
+</div>

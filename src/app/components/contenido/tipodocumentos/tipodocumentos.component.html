@@ -1,0 +1,290 @@
+<div class="card card-table">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-7 ">
+        <h3>
+          <i class="fa fa-archive"></i> Administrar Tipo de Documentos
+        </h3>
+      </div>
+      <div class="col-md-4 offset-1">
+        <input type="text" class="form-control buscar" (keyup)="filtro($event)" placeholder="Buscar Tipo de Documento">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card-body">
+
+    <eui-tabs (tabClose)="cerrarTab($event)">
+      <eui-tab-panel [title]="'Tipo de Documentos'">
+
+        <div class="row pt-3">
+          <div class="col-md-3 ">
+            <input type="text" [(ngModel)]="agregarTipoDoc.NombreTipo" class="form-control" placeholder="Nuevo Tipo de Documento" required>
+          </div>
+          <h3 (click)="agregarTiposDocs()">
+            <i class="fa fa-plus-circle text-success mas lineal ml-1"></i>
+          </h3>
+        </div>
+
+        <eui-datagrid [data]="tiposDocs" selectionMode="single" [(selection)]="tiposDocsSeleccionado" style="max-height:425px;">
+          <eui-grid-column field="tipoId" title="Id" align="center"></eui-grid-column>
+          <eui-grid-column field="nombreTipo" title="Nombre" align="center"></eui-grid-column>
+        </eui-datagrid>
+        <br>
+
+        <div class="pull-right">
+          <button type="button" class="btn btn-outline-success" (click)="seleccionarTiposDocs(tiposDocsSeleccionado)">
+            <i class="fas fa-eye"></i> Ver Tipo Documento
+          </button>
+
+          <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+            data-target="#modalEliminarTipoDoc">
+            <i class="fas fa-trash"></i> Eliminar Tipo Documento
+          </button>
+        </div>
+      </eui-tab-panel>
+
+      <eui-tab-panel *ngIf="seleccionTipoDoc" [closable]="true" [title]="tipoDoc.nombreTipo">
+        <div class="card card-table">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-1">
+                <label>ID</label>
+              </div>
+              <div class="col-md-2">
+                <label>: {{tipoDoc.tipoId}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1">
+                <label>Tipo</label>
+              </div>
+              <div class="col-md-2">
+                <label>: {{tipoDoc.nombreTipo}}</label>
+              </div>
+            </div>
+
+            <div class="col-md-4" style="position:relative;right:-635px">
+              <button type="button" class="btn btn-outline-info" data-target="#modalTipoDoc" data-toggle="modal">
+                <i class="fas fa-edit"></i> Editar Tipo Documento
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <eui-tabs>
+              <eui-tab-panel [title]="'Atributo'">
+
+                <div class="row pt-3">
+                  <div class="col-md-3 ">
+                    <input type="text" [(ngModel)]="agregarAtriTipoDoc.NombreAtributo" class="form-control text lineal " align="center" placeholder="Nuevo Atributo">
+                  </div>
+                  <div class="col-md-4 mt-1 lineal">
+                    <eui-checkbox [(ngModel)]="agregarAtriTipoDoc.Obligatorio" class="mt-1"></eui-checkbox>
+                    <label>
+                      <strong>Obligatorio</strong>
+                    </label>
+
+                  </div>
+                  <div class="col-md-4 lineal">
+                    <h3 (click)="agregarAtriTiposDocs()">
+                      <i class="fa fa-plus-circle text-success mas"></i>
+                    </h3>
+                  </div>
+                </div>
+
+                <eui-datagrid [data]="atriTiposDocs" selectionMode="single" [(selection)]="atriTiposDocsSeleccionado" style="max-height:425px">
+                  <eui-grid-column field="nombreAtributo" title="Nombre" align="center"></eui-grid-column>
+                  <eui-grid-column field="ObligatorioNombre" title="Obligatorio" align="center"></eui-grid-column>
+                </eui-datagrid>
+                <br>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-outline-info" data-target="#modalEditarAtributo"
+                    data-toggle="modal" (click)="seleccionarAtributo(atriTiposDocsSeleccionado)">
+                    <i class="fas fa-edit"></i> Editar Atributo
+                  </button>
+                  <button type="button" class="btn btn-outline-danger" data-target="#modalConfEliminarAtributo"
+                    data-toggle="modal">
+                    <i class="fas fa-trash"></i> Eliminar Atributo
+                  </button>
+                </div>
+              </eui-tab-panel>
+            </eui-tabs>
+          </div>
+        </div>
+      </eui-tab-panel>
+
+    </eui-tabs>
+  </div>
+  <div class="card-footer">
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Modal Editar Tipo Documento-->
+<div class="modal fade" id="modalTipoDoc" tabindex="-1" role="dialog" aria-labelledby="editarTipoDoc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Tipo de Documento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <label>ID:
+
+            <eui-textbox [(ngModel)]="editarTipoDoc.TipoId" [value]="tipoDoc.tipoId" disabled="disabled"></eui-textbox>
+          </label>
+        </div>
+        <div class="row">
+          <label>Nombre Tipo de Documento:
+            <eui-textbox [(ngModel)]="editarTipoDoc.NombreTipo" [value]="tipoDoc.nombreTipo" placeholder="Nombre"></eui-textbox>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal" data-dismiss="modal" data-toggle="modal" data-target="#modalConfEditarTipoDoc">Guardar
+          Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Confirmacion Editar Tipo Documento-->
+<div class="modal fade" id="modalConfEditarTipoDoc" tabindex="-1" role="dialog" aria-labelledby="editarTipoDoc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Editar</h3>
+      </div>
+      <div class="modal-body">
+        <label>¿Seguro que desea editar este Tipo de Documento?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editarTiposDocs()">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Confirmacion Eliminar Tipo Documento-->
+<div class="modal fade" id="modalEliminarTipoDoc" tabindex="-1" role="dialog" aria-labelledby="eliminarTipoDoc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Eliminar</h3>
+      </div>
+      <div class="modal-body">
+        <label>¿Seguro que desea eliminar este Tipo de Documento?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminarTiposDocs(tiposDocsSeleccionado)">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Modal Editar Atributo-->
+<div class="modal fade" id="modalEditarAtributo" tabindex="-1" role="dialog" aria-labelledby="editarAtributo" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Tipo de Documento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <label>ID:
+            <eui-textbox [(ngModel)]="editarAtriTipoDoc.TipoId" [value]="atriTipoDoc.tipoId" disabled="disabled"></eui-textbox>
+          </label>
+        </div>
+        <div class="row">
+          <label>Nombre Tipo de Documento:
+            <eui-textbox [(ngModel)]="editarAtriTipoDoc.NombreAtributo" [value]="atriTipoDoc.nombreAtributo" placeholder="Nombre"></eui-textbox>
+          </label>
+        </div>
+        <div class="row">
+          <eui-checkbox [(ngModel)]="editarAtriTipoDoc.Obligatorio" [checked]="atriTipoDoc.obligatorio"></eui-checkbox>
+          <label>
+            <strong>Obligatorio</strong>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal" data-toggle="modal" data-dismiss="modal" data-target="#modalConfEditarAtributo">Guardar
+          Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Confirmacion Editar Atributo-->
+<div class="modal fade" id="modalConfEditarAtributo" tabindex="-1" role="dialog" aria-labelledby="editarAtributo" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Editar</h3>
+      </div>
+      <div class="modal-body">
+        <label>¿Seguro que desea editar este Atributo?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editarAtriTiposDocs(atriTiposDocsSeleccionado)">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Confirmacion Eliminar Tipo Documento-->
+<div class="modal fade" id="modalConfEliminarAtributo" tabindex="-1" role="dialog" aria-labelledby="eliminarAtributo" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Eliminar</h3>
+      </div>
+      <div class="modal-body">
+        <label>¿Seguro que desea eliminar este Atributo?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminarAtriTiposDocs(atriTiposDocsSeleccionado)">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<eui-messager [showHeader]="false" borderType="none">
+  <ng-template euiBodyTemplate let-messager>
+    <div class="m-content">
+      <h2>{{messager.title}}</h2>
+      <p>{{messager.msg}}</p>
+      <div class="m-buttons">
+        <eui-linkbutton *ngFor="let button of messager.buttons" [text]="button.text" (click)="messager.closeDialog(button)">
+        </eui-linkbutton>
+      </div>
+    </div>
+  </ng-template>
+</eui-messager>

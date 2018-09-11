@@ -1,0 +1,60 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+body{
+    font-family: 'Roboto Condensed', sans-serif !important;
+    background-color: lightgray !important;
+}
+.footer{
+    padding-right: 0px !important;
+}
+.navbars{
+        background-color: rgba(255,255,255,.8) !important;
+}
+.mt-6{
+    margin-top: 75px;
+    margin-left: -40px;
+    margin-bottom: 10vh;
+}
+.contenido{
+    transition: .3s;
+}
+.contenido.active{
+    margin-left:-150px;
+}
+.ngx-pagination .current{
+    border-radius: 10px;
+    background-color:#4b578b !important;
+}
+.ngx-pagination li a{
+    transition: .8s;
+    border: 1px grey solid;
+    border-radius: 10px;
+}
+.ngx-pagination li a:hover{
+    background-color: rgb(90, 90, 90);
+    color:white;
+}
+.pagination-next{
+    background: none !important;
+}
+.buscar{
+    line-height: 36px !important;
+}
+.mas{
+border-radius:12px;
+}
+.mas:hover{
+color:white !important;
+background-color: green;
+transition: .8s;
+}
+.modal-header{
+    background-color: #6d7fcc;
+    color: white;
+}
+.btn-modal{
+    background-color: #7386D5;
+    color:white;
+}
+
+/*--------------------------------------------------------------------------------------*/
