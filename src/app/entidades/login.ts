@@ -1,8 +1,9 @@
-export interface Login {
-  
-    UserId: any,
-    NombreUsuario: any,
-    ApellidoUsuario:any,
-    ContraseñaUsuario: any,
-    CorreoUsuario:any
+export class NuevoUsuario {
+    constructor(
+        UserId?,
+        NombreUsuario?,
+        ApellidoUsuario?,
+        ContraseñaUsuario?,
+        CorreoUsuario?
+    ){}
 }

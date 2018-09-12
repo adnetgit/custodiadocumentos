@@ -3,8 +3,9 @@ import { AuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider, } from "angularx-social-login";
 import { UsuarioActivo } from '../../entidades/usuarioActivo';
 import { ServicioService } from '../../services/servicio.service';
-
-
+import { RouterModule, Router } from '@angular/router';
+import Swal from 'sweetalert2'
+import { NuevoUsuario } from '../../entidades/login';
 
 
 @Component({
@@ -24,7 +25,13 @@ export class LoginComponent implements OnInit {
     imagen: "",
     estado: false
   }
-  constructor(private authService: AuthService, private _service: ServicioService, private cd: ChangeDetectorRef) { }
+  public nuevoUsuario:NuevoUsuario;
+  constructor(
+    private authService: AuthService, 
+    private _service: ServicioService, 
+    private cd: ChangeDetectorRef,
+    private router:Router
+  ) { }
 
   ngAfterViewChecke() {
     this.cd.detectChanges();
@@ -40,6 +47,18 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  AgregarUsuario() {
+
+    Swal('Hello world!');/*
+    this._servicio.InsLogin(this.nuevoUsuario).subscribe(
+      result => {
+        console.log();
+      },
+      error => {
+        console.log(error);
+      }
+    );*/
   }
 
   public socialSignIn(socialPlatform: string) {
@@ -63,7 +82,7 @@ export class LoginComponent implements OnInit {
     });
 
     localStorage.setItem('estadoUser', JSON.stringify(this.user));
-
+    sessionStorage.setItem('login','true');
     if (this.user.estado == true) {
       this._service.rutaUrl("dashboard")
     }
@@ -71,8 +90,10 @@ export class LoginComponent implements OnInit {
   }
 
   public registro() {
-    this._service.rutaUrl("registrar")
+    this._service.rutaUrl("")
   }
-
+login(){
+  this.router.navigateByUrl('dashboard');
+}
 
 }

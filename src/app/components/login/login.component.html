@@ -1,41 +1,88 @@
-<div id="login">
-
-	<h1>
-		<strong>Bienvenido.</strong>
-	</h1>
-	<form method="get">
-		<fieldset>
-			<p>
-				<input type="text" required value="Usuario" onBlur="if(this.value=='')this.value='Username'" onFocus="if(this.value=='Username')this.value='' ">
-			</p>
-			<p>
-				<input type="password" required value="Contraseña" onBlur="if(this.value=='')this.value='Password'" onFocus="if(this.value=='Password')this.value='' ">
-			</p>
-			<p>
-				<a href="#">¿Olvido su contraseña?</a>
-			</p>
-			<p>
-				<input type="submit" value="Login">
-			</p>
-			<p>
-				<input (click)="registro()" type="submit" value="Registrarse">
-			</p>
-		</fieldset>
-	</form>
-	<p>
-		<span class="btn-round">ó</span>
-	</p>
-	<p (click)="socialSignIn('facebook')">
-		<a class="facebook-before">
-			<span class="fontawesome-facebook color-icon"></span>
-		</a>
-		<button class="facebook">Ingresar con Facebook</button>
-	</p>
-	<p (click)="socialSignIn('google')">
-		<a class="google-before">
-			<span class="fontawesome-google-plus color-icon"></span>
-		</a>
-		<button class="google">Ingresar con Google</button>
-	</p>
-
+<div id="login" class="row mt-5">
+	<div class="form-group login col-md-4 p-2">
+		<h5>
+			<strong>Bienvenido.</strong>
+		</h5>
+		<ul class="nav nav-tabs text-center" id="myTab" role="tablist">
+			<li style="width:50%;" class="nav-item">
+				<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Inicio sesión</a>
+			</li>
+			<li style="width:50%;" class="nav-item">
+				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Registro</a>
+			</li>
+		</ul>
+		<div class="tab-content mt-3 " id="myTabContent">
+			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+				<div class="form-group">
+					<input type="text" class="form-control" required placeholder="Usuario">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" required placeholder="Contraseña">
+				</div>
+				<div class="form-group">
+					<a href="#">¿Olvido su contraseña?</a>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary btn-block" (click)="login()">Iniciar sesión</button>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-block facebook" type="button" (click)="socialSignIn('facebook')">
+						Ingresar con Facebook
+					</button>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-block google" type="button" (click)="socialSignIn('google')">
+						Ingresar con Google+
+					</button>
+				</div>
+			</div>
+			<div style="width: 100%;" class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+				<div class="form-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							<i class="fa fa-address-book" aria-hidden="true"></i>
+						</div>
+						<input type="text" class="form-control" ([ngModel])="nuevoUsuario.NombreUsuario" required placeholder="Nombre usuario">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							<i class="fa fa-address-book" aria-hidden="true"></i>
+						</div>
+						<input type="text" class="form-control" required placeholder="Apellidos">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</div>
+						<input type="email" class="form-control" required placeholder="Correo">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</div>
+						<input type="password" class="form-control" required placeholder="Contraseña">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</div>
+						<input type="password" class="form-control" required placeholder="Repita contraseña">
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary btn-block" (click)="AgregarUsuario()">Registrar</button>
+				</div>
+				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -1,15 +1,19 @@
 <div class="container-fluid ">
     <div class="row">
         <div class="col-md-12 navbars fixed-top">
-            <app-navbar  *ngIf="loggedIn" ></app-navbar>
+            <app-navbar *ngIf="login"></app-navbar>
         </div>
     </div>
+
     <div class="row">
-        <div class="col-md-3" >
-            <app-sidebar ></app-sidebar>
+        <div class="col-md-12">
+            <app-login *ngIf="!login"></app-login>
+        </div>
+        <div class="col-md-3">
+            <app-sidebar *ngIf="login"></app-sidebar>
         </div>
         <div class="col-md-9 mt-6 contenido active">
-            <router-outlet></router-outlet>
+            <router-outlet *ngIf="login"></router-outlet>
         </div>
     </div>
     <div class="row">

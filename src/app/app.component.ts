@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
   public loggedIn: boolean;
   public router: any;
   public pathname: string;
-
+  public login:any=false;
   constructor(private cd: ChangeDetectorRef, public _service: ServicioService) {
     this.router = window.location.pathname;
     this.pathname = this.router.substring(1, this.router.length);
-
+    this.login = sessionStorage.getItem('login');
   }
 
   ngAfterViewChecke() {

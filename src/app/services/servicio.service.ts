@@ -8,7 +8,6 @@ import { Usuario } from '../entidades/usuario';
 import { bucket } from '../entidades/bucket';
 import { Archivo } from '../entidades/archivo';
 import { Empresa } from '../entidades/empresa';
-import { Login } from '../entidades/login';
 
 
 @Injectable()
@@ -101,7 +100,7 @@ export class ServicioService {
   }
 
 
-  InsLogin(Usr: Login): Observable<any> {
+  InsLogin(Usr: any): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiInsert}${apiMethod.InsLogin}`, JSON.stringify(Usr), this.header);
   }
 

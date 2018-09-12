@@ -11,7 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import {NuevousuarioComponent} from './components/nuevousuario/nuevousuario.component';
 
 const appRoutes: Routes =[
-    {path:'',component  : LoginComponent},
+    {path:'',component :LoginComponent},
     {path:'main',component :InicioComponent},
     {path:'dashboard',component :DashboardComponent},
     {path:'documentos',component :DocumentosComponent},
