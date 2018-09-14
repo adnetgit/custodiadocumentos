@@ -1,6 +1,4 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import fontawesome from '@fortawesome/fontawesome';
-import { faUserClock, faEye, faFileArchive } from '@fortawesome/fontawesome-free-solid';
 import { ServicioService } from './services/servicio.service';
 import { Router } from "@angular/router";
 import { and } from '@angular/router/src/utils/collection';
@@ -9,9 +7,7 @@ import { and } from '@angular/router/src/utils/collection';
 
 
 
-fontawesome.library.add(faUserClock);
-fontawesome.library.add(faEye);
-fontawesome.library.add(faFileArchive);
+
 
 @Component({
   selector: 'app-root',

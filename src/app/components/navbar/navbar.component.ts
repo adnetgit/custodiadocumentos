@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  ngOnInit() {
+  ngOnInit() {/*
     let item = JSON.parse(localStorage.getItem("estadoUser"));
     this.user.email = item.email;
     this.user.estado = item.estado;
@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit {
     this.user.lastName = item.lastName;
     this.user.name = item.name;
     this.user.provider = item.provider
-
+*/
   }
 
   public signOut() {

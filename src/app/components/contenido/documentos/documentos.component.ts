@@ -76,28 +76,27 @@ export class DocumentosComponent implements OnInit {
   public MetadatosModal: any[] = [];
   public tituloModal: string = "";
   public aux = {};
-  public tabs :any=[];
+  public tabs = [];
 
   constructor(private _servicio: ServicioService, private cd: ChangeDetectorRef) { }
-
-  ngAfterViewChecke() {
-    this.cd.detectChanges();
-  }
-  ngAfterViewInit() {
-    this.cd.detectChanges();
-  }
-  ngAfterContentChecked() {
-    this.cd.detectChanges();
-  }
-  ngAfterContentInit() {
-    this.cd.detectChanges();
-  }
-
-
+  /*
+    ngAfterViewChecke() {
+      this.cd.detectChanges();
+    }
+    ngAfterViewInit() {
+      this.cd.detectChanges();
+    }
+    ngAfterContentChecked() {
+      this.cd.detectChanges();
+    }
+    ngAfterContentInit() {
+      this.cd.detectChanges();
+    }
+  
+  */
   ngOnInit() {
     this.obtenerEspacios();
     this.obtenerMetadatos(0);
-    this.tabs.push({"titulo":"prueba"});
 
   }
 
@@ -107,18 +106,9 @@ export class DocumentosComponent implements OnInit {
     this._servicio.getEspacios(this.auxEspacio).subscribe(
       result => {
         this.espacios = result;
-
-
-        this.espacios.forEach(e => {
+        /*this.espacios.forEach(e => {
           this._servicio.getEmpresas
-
-        });
-
-
-
-
-
-
+        });*/
         console.log(result);
       },
       error => {
@@ -126,7 +116,6 @@ export class DocumentosComponent implements OnInit {
       }
     );
   }
-
   agregarEspacios() {
     console.log(this.agregarEspacio);
     this._servicio.InsEspacio(this.agregarEspacio).subscribe(
@@ -175,35 +164,28 @@ export class DocumentosComponent implements OnInit {
   }
 
   seleccionarEspacio(fila) {
+    if (fila == null) { return }
+    this.tabs.push(fila);
+    this.obtenerTipoDoc();
+    this.obtenerDocumento(fila);
 
-    if (fila == null) {
-      console.log("Seleccione un tipo de documento")
-    } else {
-      this.seleccionEspacio = true;
-      this.espacio = fila;
-      this.auxArchivo.BucketId = this.espacio.bucketId;
-      this.obtenerTipoDoc();
-      this.obtenerDocumento(this.auxArchivo);
-    }
   }
-
   //Metodos para Documento
   obtenerDocumento(archivo: Archivo) {
     this._servicio.GetArchivos(archivo).subscribe(
       result => {
+        console.log("Documentos: ", this.documentos);
         this.documentos = result;
-        console.log(this.documentos);
       },
       error => {
         console.log(error);
       }
     );
   }
-
   editarDocumento(fila) {
     this.tituloModal = "Editar Documento";
     this.documento = fila;
-    
+
     console.log(this.documentos);
   }
 
@@ -244,7 +226,7 @@ export class DocumentosComponent implements OnInit {
     this._servicio.GetTipoDocumento(this.auxTipoDoc).subscribe(
       result => {
         this.tiposDocs = result;
-        console.log(this.tiposDocs);
+        console.log("Tipo Documentos: ", this.tiposDocs);
       },
       error => {
         console.log(error);
@@ -252,7 +234,8 @@ export class DocumentosComponent implements OnInit {
     );
   }
 
-  obtenerAtriTiposDocs(AtriTipoDoc: AtriTipoDocumento): any {
+  obtenerAtriTiposDocs(AtriTipoDoc) {
+    console.log(AtriTipoDoc);
     this._servicio.GetAtriTipoDocumento(AtriTipoDoc).subscribe(
       result => {
         this.atriTiposDocs = result;

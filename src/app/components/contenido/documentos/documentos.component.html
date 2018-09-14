@@ -24,97 +24,101 @@
                 <br>
                 <div class="pull-right p-2">
                     <button type="button" class="btn btn-primary btn-sm" (click)="seleccionarEspacio(espacioSeleccionado)">
-                        <i class="fas fa-eye"></i> Ver Espacio
+                        <i class="fa fa-eye" aria-hidden="true"></i> Ver Espacio
                     </button>
                     <button type="button" data-target="#modalEliminarEspacio" data-toggle="modal" class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash"></i> Eliminar Espacio
+                        <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Espacio
                     </button>
                 </div>
             </eui-tab-panel>
 
-
-            <eui-tab-panel *ngIf="seleccionEspacio" [closable]="true" [title]="espacio.bucketId">
-                <div class="card card-table">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <label>Espacio </label>
-                            </div>
-                            <div class="col-md-2">
-                                <label>: {{espacio.bucketId}}</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1">
-                                <label>Rut de Empresa</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label>: {{espacio.rutEmpresa}}</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1">
-                                <label>Region</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label>: {{espacio.region}}</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="position:relative;right:-635px">
-                            <button type="button" class="btn btn-outline-success" data-target="#modalEditarEspacio" data-toggle="modal">
-                                <i class="fas fa-edit"></i> Agregar Archivo
-                            </button>
-                        </div>
-                        <div class="col-md-4" style="position:relative;right:-635px">
-                            <button type="button" class="btn btn-outline-info" data-target="#modalEditarEspacio" data-toggle="modal">
-                                <i class="fas fa-edit"></i> Editar Espacio
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="col-md-4 offset-3">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="combo">Tipo de Documento</label>
+            <eui-tab-panel *ngFor="let tab of tabs" [closable]="true" [title]="tab.bucketId" >
+                    <div class="card card-table">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>Espacio </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>: {{tab.bucketId}}</label>
+                                    </div>
                                 </div>
-                                <select #tipo (change)="obtenerAtriTiposDocs(tipo.value)" class="custom-select" id="inputTipo">
-                                    <option value="-1" selected>Escoger...</option>
-                                    <option value="item.tipoId" *ngFor="let item of tiposDocs">{{item.nombreTipo}}</option>
-                                </select>
-
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>Rut de Empresa</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>: {{tab.rutEmpresa}}</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>Region</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>: {{tab.region}}</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>
+                                            <button type="button" class="btn btn-success btn-sm" data-target="#modalAgregarArchivo" data-toggle="modal">
+                                                <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Archivo
+                                            </button>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-info btn-sm" data-target="#modalEditarEspacio" data-toggle="modal">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Espacio
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <select #tipo (change)="obtenerAtriTiposDocs(tipo.value)" class="custom-select form-control-sm" id="inputTipo">
+                                            <option value="-1" selected disabled>Tipo de Documento</option>
+                                            <option *ngFor="let item of tiposDocs" value="item.tipoId">{{item.nombreTipo}}</option>
+                                        </select>
+                                    </div>
+        
+        
+                                </div>
+        
                             </div>
-                        </div>
-                        <div *ngIf="Metadatos != ''" class="row justify-content-center border-bottom mb-2">
-                            <h5>Metadatos</h5>
-                        </div>
-                        <div class="row justify-content-center">
-                            <input class="form-control mr-2" *ngFor="let metadato of Metadatos" type="search" name="{{metadato.Nombre}}" id="{{metadato.Nombre}}"
-                                placeholder="{{metadato.Nombre}}">
-                        </div>
-                        <br>
-                        <eui-tabs>
-                            <eui-tab-panel [title]="'Documentos'">
-                                <eui-datagrid [data]="documentos" selectionMode="single" [(selection)]="documentoSeleccionado" style="max-height:425px;">
-                                    <eui-grid-column field="nombreArchivo" title="Nombre" align="center"></eui-grid-column>
-                                    <eui-grid-column field="tipoId" title="Tipo de Documento" align="center"></eui-grid-column>
-                                    <eui-grid-column field="extension" title="Extensión" align="center"></eui-grid-column>
-                                </eui-datagrid>
+        
+                            <div class="card-body">
+                                <div class="col-md-4 offset-3">
+        
+                                </div>
+                                <div *ngIf="Metadatos != ''" class="row justify-content-center border-bottom mb-2">
+                                    <h5>Metadatos</h5>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input class="form-control mr-2" *ngFor="let metadato of Metadatos" type="search" name="{{metadato.Nombre}}" id="{{metadato.Nombre}}"
+                                        placeholder="{{metadato.Nombre}}">
+                                </div>
                                 <br>
-                                <div class="pull-right">
-                                    <button type="button" class="btn btn-outline-info">
-                                        <i class="fas fa-edit"></i> Editar Archivo
-                                    </button>
-                                    <button type="button" class="btn btn-outline-danger">
-                                        <i class="fas fa-trash"></i> Eliminar Archivo
-                                    </button>
-                                </div>
-                            </eui-tab-panel>
-                        </eui-tabs>
-                    </div>
-                </div>
+                                <eui-tabs>
+                                    <eui-tab-panel [title]="'Documentos'">
+                                        <eui-datagrid [data]="documentos" selectionMode="single" [(selection)]="documentoSeleccionado" style="max-height:425px;">
+                                            <eui-grid-column field="nombreArchivo" title="Nombre" align="center"></eui-grid-column>
+                                            <eui-grid-column field="tipoId" title="Tipo de Documento" align="center"></eui-grid-column>
+                                            <eui-grid-column field="extension" title="Extensión" align="center"></eui-grid-column>
+                                        </eui-datagrid>
+                                        <br>
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-info btn-sm">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Archivo
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Archivo
+                                            </button>
+                                        </div>
+                                    </eui-tab-panel>
+                                </eui-tabs>
+                            </div>
+                        </div>
             </eui-tab-panel>
-
         </eui-tabs>
     </div>
 
@@ -172,7 +176,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="nuevaEmpresa">Agregar nuevo Espacio</h5>
+                <h5 class="modal-title" id="nuevaEmpresa">Editar espacio</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
