@@ -22,11 +22,11 @@
                     <eui-grid-column field="region" title="Región" align="center"></eui-grid-column>
                 </eui-datagrid>
                 <br>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-outline-success" (click)="seleccionarEspacio(espacioSeleccionado)">
+                <div class="pull-right p-2">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="seleccionarEspacio(espacioSeleccionado)">
                         <i class="fas fa-eye"></i> Ver Espacio
                     </button>
-                    <button type="button" data-target="#modalEliminarEspacio" data-toggle="modal" class="btn btn-outline-danger">
+                    <button type="button" data-target="#modalEliminarEspacio" data-toggle="modal" class="btn btn-danger btn-sm">
                         <i class="fas fa-trash"></i> Eliminar Espacio
                     </button>
                 </div>
@@ -117,8 +117,7 @@
 
         </eui-tabs>
     </div>
-    <div class="card-footer">
-    </div>
+
 </div>
 
 
@@ -136,25 +135,33 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <label>Nombre:
-                        <eui-textbox [(ngModel)]="agregarEspacio.BucketId" placeholder="Nuevo Espacio"></eui-textbox>
-                    </label>
-                </div>
-                <div class="row">
-                    <label>Empresa:
-                        <eui-textbox [(ngModel)]="agregarEspacio.RutEmpresa"></eui-textbox>
-                    </label>
+
+                <div>
+                    <div class="form-group row">
+                        <label for="nombre" class="col-sm-2 col-form-label col-form-label-sm">Nombre:</label>
+                        <div class="col-sm-10">
+                            <input type="email" [(ngModel)]="agregarEspacio.BucketId" placeholder="Nuevo Espacio" class="form-control form-control-sm"
+                                id="nombre" placeholder="Nombre empresa">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="empresa" class="col-sm-2 col-form-label col-form-label-sm">Empresa:</label>
+                        <div class="col-sm-10">
+                            <input type="email" [(ngModel)]="agregarEspacio.RutEmpresa" class="form-control form-control-sm" id="empresa" placeholder="79.256.321-5">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="region" class="col-sm-2 col-form-label col-form-label-sm">Region:</label>
+                        <div class="col-sm-10">
+                            <input type="email" [(ngModel)]="agregarEspacio.Region" class="form-control form-control-sm" id="region" placeholder="South America">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="row">
-                    <label>Region:
-                        <eui-textbox [(ngModel)]="agregarEspacio.Region"></eui-textbox>
-                    </label>
-                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-modal" data-dismiss="modal" (click)="agregarEspacios()">Guardar Cambios</button>
+                <button type="button" class="btn btn-modal btn-sm" data-dismiss="modal" (click)="agregarEspacios()">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>Guardar Cambios</button>
             </div>
         </div>
     </div>

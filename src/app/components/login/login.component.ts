@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('estadoUser', JSON.stringify(this.user));
     sessionStorage.setItem('login','true');
     if (this.user.estado == true) {
-      this._service.rutaUrl("dashboard")
+      this._service.rutaUrl("/dashboard")
     }
 
   }
@@ -93,7 +93,8 @@ export class LoginComponent implements OnInit {
     this._service.rutaUrl("")
   }
 login(){
-  this.router.navigateByUrl('dashboard');
+  sessionStorage.setItem('login','true');
+  this.router.navigateByUrl('/documentos');
 }
 
 }

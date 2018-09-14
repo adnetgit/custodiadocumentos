@@ -76,7 +76,7 @@ export class DocumentosComponent implements OnInit {
   public MetadatosModal: any[] = [];
   public tituloModal: string = "";
   public aux = {};
-
+  public tabs :any=[];
 
   constructor(private _servicio: ServicioService, private cd: ChangeDetectorRef) { }
 
@@ -97,6 +97,8 @@ export class DocumentosComponent implements OnInit {
   ngOnInit() {
     this.obtenerEspacios();
     this.obtenerMetadatos(0);
+    this.tabs.push({"titulo":"prueba"});
+
   }
 
   //Metodos para Bucket
