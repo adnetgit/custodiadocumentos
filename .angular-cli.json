@@ -20,19 +20,20 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/font-awesome/css/font-awesome.css",
-        "../node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.min.css",
         "../node_modules/ng-easyui/themes/material/easyui.css",
         "../node_modules/ng-easyui/themes/angular.css",
-        "../node_modules/ng-easyui/themes/icon.css"
-        
+        "../node_modules/ng-easyui/themes/icon.css",
+        "../node_modules/zzz/css/sb-admin-2.css",
+        "../node_modules/zzz/css/bootstrap.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.js",
         "./app/js/main.js",
-        "../node_modules/echarts/dist/echarts.min.js"
+        "../node_modules/echarts/dist/echarts.min.js",
+        "../node_modules/zzz/js/sb-admin-2.js",
+        "../node_modules/zzz/js/metisMenu.min.js",
+        "../node_modules/zzz/js/bootstrap.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

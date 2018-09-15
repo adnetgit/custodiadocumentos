@@ -12,7 +12,7 @@ body{
     background: linear-gradient(to right, #0ED2F7, #B2FEFA);
 }*/
 
-
+/*
 .cardBox {
     float: left;
     font-size: 1.2em;
@@ -54,7 +54,6 @@ body{
   height: 100%;
   padding:  3px 0px 0px 13px;
   position: absolute;
- /* text-align: center;*/
   width: 100%;
   
 }
@@ -88,4 +87,9 @@ body{
 .col-md-5{
   padding-top:10px;
   padding-bottom:10px;
+}
+*/
+/*FC*/
+.no-padding{
+  padding: 0px;
 }

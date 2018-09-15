@@ -42,6 +42,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
 
     let item = JSON.parse(localStorage.getItem("estadoUser"));
+    console.log(item);
+    
     if (item.estado ==false) {
       this.loggedIn = false;
       if ((this.router != "/") && (this.router != "/registrar")) {
@@ -55,7 +57,6 @@ export class AppComponent implements OnInit {
         this._service.rutaUrl(this.pathname);
       }
     }
-
   }
 
 } 

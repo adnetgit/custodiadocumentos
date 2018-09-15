@@ -1,3 +1,31 @@
+
+
+
+
+
+
+
+.sidebar{
+    background-color: rgb(78, 101, 192);
+    color:white;
+}
+.nav li a{
+    color: white;
+}
+.nav > li > a:hover, .nav > li > a:focus{
+    background-color: white;
+    color: rgb(78, 101, 192);
+}
+
+
+
+
+
+
+
+
+
+/*
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
@@ -80,4 +108,4 @@ ul ul a {
 
 #sidebar.active {
     margin-left: -265px;
-}
+}*/

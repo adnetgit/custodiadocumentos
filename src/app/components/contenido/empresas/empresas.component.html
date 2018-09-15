@@ -13,24 +13,23 @@
     </div>
   </div>
   <div class="card-body">
-    <eui-tabs (tabClose)="cerrarTab($event)">
+    <eui-tabs (tabClose)="cerrarTab($event)" (tabSelect)="obtenerUsuarios($event)">
       <eui-tab-panel [title]="'Empresas'">
         <eui-datagrid [data]="empresas" selectionMode="single" [(selection)]="empresaSeleccionada" style="max-height:425px;">
           <eui-grid-column field="nombreEmpresa" title="Nombre" align="center"></eui-grid-column>
           <eui-grid-column field="rutEmpresa" title="Rut" align="center"></eui-grid-column>
         </eui-datagrid>
-        <br>
-        <div class="pull-right">
-          <button [disabled]="!empresaSeleccionada.nombreEmpresa.length > 0" type="button" class="btn btn-outline-success" (click)="seleccionarEmpresa(empresaSeleccionada)">
-            <i class="fas fa-eye"></i> Ver Empresa
+        <div class="pull-right p-2">
+          <button [disabled]="!empresaSeleccionada.nombreEmpresa.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarEmpresa(empresaSeleccionada)">
+            <i class="fa fa-eye" aria-hidden="true"></i> Ver Empresa
           </button>
 
-          <button [disabled]="!empresaSeleccionada.rutEmpresa.length > 0" type="button" class="btn btn-outline-danger">
-            <i class="fas fa-trash"></i> Eliminar Empresa
+          <button [disabled]="!empresaSeleccionada.rutEmpresa.length > 0" type="button" class="btn btn-danger btn-sm">
+            <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Empresa
           </button>
         </div>
       </eui-tab-panel>
-      <eui-tab-panel *ngIf="seleccionEmpresa" [closable]="true" [title]="empresa.nombreEmpresa">
+      <eui-tab-panel  *ngFor="let empresa of tabEmpresa;let i = index;" [closable]="true" [title]="empresa.nombreEmpresa">
         <div class="card card-table">
           <div class="card-header">
             <div class="row">
@@ -51,13 +50,14 @@
             </div>
 
             <div class="col-md-4" style="position:relative;right:-685px">
-              <button type="button" class="btn btn-outline-info" data-target="#modalEditarEmpresa" data-toggle="modal" (click)="editarEmpresa(empresaSeleccionada)">
-                <i class="fas fa-edit"></i> Editar Empresa
+              <button type="button" class="btn btn-info btn-sm" data-target="#modalEditarEmpresa" data-toggle="modal" (click)="editarEmpresa(empresaSeleccionada)">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Empresa
               </button>
             </div>
 
           </div>
-          <div class="card-body">
+          <br>
+          <div class="card-body no-padding">
             <eui-tabs>
               <eui-tab-panel [title]="'Usuarios'">
                 <eui-datagrid [data]="usuarios" selectionMode="single" [(selection)]="usuarioSeleccionado" style="max-height:425px">
@@ -65,22 +65,20 @@
                   <eui-grid-column field="rutUsuario" title="Rut" align="center"></eui-grid-column>
 
                 </eui-datagrid>
-
-
-                <br>
-
-                <div class="pull-right">
-                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-outline-success" (click)="seleccionarUsuario(usuarioSeleccionado)">
-                    <i class="fas fa-eye"></i> Ver Usuario
+                <div class="pull-right p-2">
+                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarUsuario(usuarioSeleccionado)">
+                    <i class="fa fa-eye" aria-hidden="true"></i> Ver Usuario
                   </button>
 
-                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-outline-info" data-target="#modal" data-toggle="modal" data-target="#modalCambiarPass">
-                    <i class="fas fa-eye"></i> Cambiar Contraseña
+                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-info btn-sm" data-target="#modal"
+                    data-toggle="modal" data-target="#modalCambiarPass">
+                    <i class="fa fa-lock" aria-hidden="true"></i> Cambiar Contraseña
                   </button>
 
 
-                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalEliminarUsuario">
-                    <i class="fas fa-trash"></i> Eliminar Usuario
+                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                    data-target="#modalEliminarUsuario">
+                    <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Usuario
                   </button>
                 </div>
               </eui-tab-panel>
@@ -90,15 +88,15 @@
                   <eui-grid-column field="region" title="Region" align="center"></eui-grid-column>
                 </eui-datagrid>
                 <br>
-                <div class="pull-right">
-                  <button type="button" class="btn btn-outline-success" (click)="seleccionarEspacio(espacioSeleccionado)">
-                    <i class="fas fa-eye"></i> Ver Espacio
+                <div class="pull-right p-2">
+                  <button type="button" class="btn btn-primary btn-sm" (click)="seleccionarEspacio(espacioSeleccionado)">
+                    <i class="fa fa-eye" aria-hidden="true"></i> Ver Espacio
                   </button>
-                  <button type="button" class="btn btn-outline-info" data-target="#modal" data-toggle="modal" (click)="editarEspacio(espacioSeleccionado)">
-                    <i class="fas fa-edit"></i> Editar Espacio
+                  <button type="button" class="btn btn-info btn-sm" data-target="#modal" data-toggle="modal" (click)="editarEspacio(espacioSeleccionado)">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Espacio
                   </button>
-                  <button type="button" class="btn btn-outline-danger">
-                    <i class="fas fa-trash"></i> Eliminar Espacio
+                  <button type="button" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Espacio
                   </button>
                 </div>
               </eui-tab-panel>
@@ -128,15 +126,15 @@
                   <eui-grid-column field="nombre" title="Nombre" align="center"></eui-grid-column>
                 </eui-datagrid>
                 <br>
-                <div class="pull-right">
-                  <button type="button" class="btn btn-outline-success" (click)="seleccionarTipo(tipoSeleccionado)">
-                    <i class="fas fa-eye"></i> Ver Tipo de Documento
+                <div class="pull-right p-2">
+                  <button type="button" class="btn btn-primary btn-sm" (click)="seleccionarTipo(tipoSeleccionado)">
+                    <i class="fa fa-eye" aria-hidden="true"></i> Ver Tipo de Documento
                   </button>
-                  <button type="button" class="btn btn-outline-info" data-target="#modal" data-toggle="modal" (click)="editarTipo(tipoSeleccionado)">
-                    <i class="fas fa-edit"></i> Editar Tipo de Documento
+                  <button type="button" class="btn btn-info btn-sm" data-target="#modal" data-toggle="modal" (click)="editarTipo(tipoSeleccionado)">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Tipo de Documento
                   </button>
-                  <button type="button" class="btn btn-outline-danger">
-                    <i class="fas fa-trash"></i> Eliminar Tipo de Documento
+                  <button type="button" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Tipo de Documento
                   </button>
                 </div>
               </eui-tab-panel>
@@ -173,8 +171,8 @@
             </div>
 
             <div class="col-md-4" style="position:relative;right:-685px">
-              <button type="button" class="btn btn-outline-info" data-target="#modalEditarUsuario" data-toggle="modal" (click)="editarUsuario(usuarioSeleccionado)">
-                <i class="fas fa-edit"></i> Editar Usuario
+              <button type="button" class="btn btn-info btn-sm" data-target="#modalEditarUsuario" data-toggle="modal" (click)="editarUsuario(usuarioSeleccionado)">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Usuario
               </button>
             </div>
 
@@ -187,18 +185,34 @@
                 </eui-datagrid>
                 <br>
                 <div class="pull-right">
-                  <button type="button" class="btn btn-outline-success" (click)="seleccionarPerfil(perfilSeleccionado)">
-                    <i class="fas fa-eye"></i> Ver Perfil
+                  <button type="button" class="btn btn-primary btn-sm" (click)="seleccionarPerfil(perfilSeleccionado)">
+                    <i class="fa fa-eye" aria-hidden="true"></i> Ver Perfil
                   </button>
-                  <button type="button" class="btn btn-outline-info" data-target="#modal" data-toggle="modal" (click)="editarPerfil()">
-                    <i class="fas fa-edit"></i> Editar Perfil
+                  <button type="button" class="btn btn-info btn-sm" data-target="#modal" data-toggle="modal" (click)="editarPerfil()">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Perfil
                   </button>
-                  <button type="button" class="btn btn-outline-danger">
-                    <i class="fas fa-trash"></i> Eliminar Perfil
+                  <button type="button" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Perfil
                   </button>
                 </div>
               </eui-tab-panel>
               <eui-tab-panel [title]="'Actividades'">
+                <div class="row">
+                  <div class="col-md-3">
+                      <div class="card">
+                          <div class="card-header">
+                              <h5>Último Inicio de sesión</h5>
+                          </div>
+                          <div class="card-body">
+
+                          </div>
+                        </div>
+                  </div>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"></div>
+
+                </div>
                 <div class="row">
                   <div class="col-md-5 offset-1">
                     <div class="card card-table">
@@ -346,12 +360,12 @@
             </label>
           </div>
           <div class="row pt-2">
-            
+
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-modal"  (click)="EditarEmpresa(empresaSeleccionada)">Guardar Cambios</button>
+        <button type="button" class="btn btn-modal" (click)="EditarEmpresa(empresaSeleccionada)">Guardar Cambios</button>
       </div>
     </div>
   </div>
@@ -402,13 +416,13 @@
 
         <div class="row">
           <label>Rut Empresa:
-            <eui-textbox [(ngModel)]="AuxEmpresa.RutEmpresa" ></eui-textbox>
+            <eui-textbox [(ngModel)]="AuxEmpresa.RutEmpresa"></eui-textbox>
             <eui-addon>
               <i class="fa fa-lock mr-1"></i>
             </eui-addon>
           </label>
         </div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-modal" (click)="AgregarEmpresa()">Guardar Cambios</button>
@@ -438,13 +452,13 @@
 
         <div class="row">
           <label>Nueva Password:
-            <eui-textbox [(ngModel)]="auxUsuario.Password" ></eui-textbox>
+            <eui-textbox [(ngModel)]="auxUsuario.Password"></eui-textbox>
             <eui-addon>
               <i class="fa fa-user mr-1"></i>
             </eui-addon>
           </label>
         </div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-modal" (click)="CambiarPass(usuarioSeleccionado)">Guardar Cambios</button>
@@ -497,21 +511,21 @@
 
         <div class="row">
           <label>Empresa:
-              <select #em (change)="CambiarComboEmpresa(em.value)" class="custom-select" id="inputEmpresa">
-                  <option value="0" selected>Escoger...</option>
-                  <option value="111.111.111">Claro</option>
-                  <option value="222.222.222">Vtr</option>
-                  <option value="333.333.333">Wom</option>
-                  <option value="444.444.444">Metlife</option>
-                  <option value="555.555.555">Jumbo</option>
-                  <option value="66.666.666-6">Entel</option>
-                  <option value="777.777.777">Lider</option>
-              </select>
-            
+            <select #em (change)="CambiarComboEmpresa(em.value)" class="custom-select" id="inputEmpresa">
+              <option value="0" selected>Escoger...</option>
+              <option value="111.111.111">Claro</option>
+              <option value="222.222.222">Vtr</option>
+              <option value="333.333.333">Wom</option>
+              <option value="444.444.444">Metlife</option>
+              <option value="555.555.555">Jumbo</option>
+              <option value="66.666.666-6">Entel</option>
+              <option value="777.777.777">Lider</option>
+            </select>
+
           </label>
         </div>
-      
-        
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="EditarUsuario(usuarioSeleccionado)" data-dismiss="modal">Aceptar</button>

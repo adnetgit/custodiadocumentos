@@ -4,6 +4,7 @@ import { bucket } from '../../../entidades/bucket';
 import { Archivo } from '../../../entidades/archivo';
 import { TipoDocumento } from '../../../entidades/TipoDocumento';
 import { AtriTipoDocumento } from '../../../entidades/atriTipoDocumento';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-documentos',
@@ -167,12 +168,23 @@ export class DocumentosComponent implements OnInit {
     if (fila == null) { return }
     this.tabs.push(fila);
     this.obtenerTipoDoc();
-    this.obtenerDocumento(fila);
+    //this.obtenerDocumento(fila);
 
   }
   //Metodos para Documento
-  obtenerDocumento(archivo: Archivo) {
-    this._servicio.GetArchivos(archivo).subscribe(
+  obtenerDocumento(obj) {
+    this.documentos=[];
+    let archivo = this.espacios.filter(arch => arch.bucketId == obj.title);
+    console.log(archivo);
+    let ar:Archivo= {
+      ArchivoId: "",
+      BucketId: "",
+      TipoId: "",
+      NombreArchivo: "",
+      Extension: ""
+    }
+    ar.BucketId = obj.title;
+    this._servicio.GetArchivos(ar).subscribe(
       result => {
         console.log("Documentos: ", this.documentos);
         this.documentos = result;

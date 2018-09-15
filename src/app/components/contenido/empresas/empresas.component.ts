@@ -13,11 +13,11 @@ export class EmpresasComponent implements OnInit {
   public cols: any[] = [];
   public cols_filtro: any[] = [];
   public empresa: any = {};
-  public empresaSeleccionada: any = {"nombreEmpresa":"", "rutEmpresa": ""};
+  public empresaSeleccionada: any = { "nombreEmpresa": "", "rutEmpresa": "" };
   public empresas: any = [];
   public tituloModal: string = "";
   public data_filter: any = [];
-
+  public tabEmpresa: any = [];
   public seleccionEmpresa: boolean = false;
   public seleccionUsuario: boolean = false;
   public seleccionPerfil: boolean = false;
@@ -29,7 +29,7 @@ export class EmpresasComponent implements OnInit {
     Password: ""
   };
   public usuario: any = {};
-  public usuarioSeleccionado: any = {"nombreUsuario": "", "rutUsuario": "", "rutEmpresa": ""};
+  public usuarioSeleccionado: any = { "nombreUsuario": "", "rutUsuario": "", "rutEmpresa": "" };
   public usuarios = [];
 
   public espacios = [];
@@ -64,9 +64,9 @@ export class EmpresasComponent implements OnInit {
   public perfilSeleccionado: any = {};
   public AuxEmpresa: Empresa = {
     RutEmpresa: "",
-    NombreEmpresa:""
+    NombreEmpresa: ""
   };
-  
+
 
   constructor(private _servicio: ServicioService) {
     this.data_filter = this.empresas;
@@ -75,7 +75,7 @@ export class EmpresasComponent implements OnInit {
   ngOnInit() {
     this.obtenerEmpresas();
   }
-  
+
   obtenerEmpresas() {
     this._servicio.getEmpresas(null).subscribe(
       result => {
@@ -87,7 +87,7 @@ export class EmpresasComponent implements OnInit {
       }
     );
   }
-  
+
   obtenerEspacios(rutempresa: string) {
     this.auxEspacio.RutEmpresa = rutempresa
     this._servicio.getEspacios(this.auxEspacio).subscribe(
@@ -102,41 +102,45 @@ export class EmpresasComponent implements OnInit {
   }
 
   EditarEmpresa(Empr: Empresa) {
-    if ((this.AuxEmpresa.NombreEmpresa != "") && (Empr.NombreEmpresa != this.AuxEmpresa.NombreEmpresa)){
-     Empr.NombreEmpresa = this.AuxEmpresa.NombreEmpresa;
+    if ((this.AuxEmpresa.NombreEmpresa != "") && (Empr.NombreEmpresa != this.AuxEmpresa.NombreEmpresa)) {
+      Empr.NombreEmpresa = this.AuxEmpresa.NombreEmpresa;
     }
-   
-     this._servicio.EditarEmpresa(Empr).subscribe(
-         result => {
-             
-             this.LimpiarAuxEmpresa();
-         },
-         error => {
-             console.log(error);
-         }
-     );
-   }
-  
-   AgregarEmpresa() {  
+
+    this._servicio.EditarEmpresa(Empr).subscribe(
+      result => {
+
+        this.LimpiarAuxEmpresa();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  AgregarEmpresa() {
     this._servicio.InsEmpresa(this.AuxEmpresa).subscribe(
       result => {
         this.obtenerEmpresas();
         this.LimpiarAuxEmpresa();
       },
-      error =>{
+      error => {
         console.log(error);
-        
+
       }
     );
     this.obtenerEmpresas();
     this.LimpiarAuxEmpresa();
   }
 
-  
 
-  obtenerUsuarios(rutempresa: any) {
-    this._servicio.getUsuarioEmpresa(rutempresa).subscribe(
+
+  obtenerUsuarios(obj: any) {
+    this.usuarios=[];
+    let rutEmpresa = this.tabEmpresa.filter(empresa => empresa.nombreEmpresa == obj.title);
+    console.log(rutEmpresa[0]);
+    this._servicio.getUsuarioEmpresa(rutEmpresa[0].rutEmpresa).subscribe(
       result => {
+        console.log("Usuarios empresa:", result);
         this.usuarios = result;
         this.data_filter = result;
       },
@@ -155,9 +159,11 @@ export class EmpresasComponent implements OnInit {
   }
 
   seleccionarEmpresa(empresa) {
+    this.tabEmpresa.push(empresa);
+    console.log("empresa seleccionada", empresa);
     this.seleccionEmpresa = true;
     this.empresa = empresa;
-    this.obtenerUsuarios(empresa.rutEmpresa);
+    //this.obtenerUsuarios(empresa.rutEmpresa);
     //this.obtenerEspacios(empresa.rutEmpresa);
   }
 
@@ -167,7 +173,7 @@ export class EmpresasComponent implements OnInit {
     } else if (panel.title == this.usuario.nombreUsuario) {
       this.seleccionUsuario = false;
     }
-    this.usuarioSeleccionado = {"nombreUsuario": "", "rutUsuario": "", "rutEmpresa": ""};
+    this.usuarioSeleccionado = { "nombreUsuario": "", "rutUsuario": "", "rutEmpresa": "" };
   }
 
   editarEmpresa() {
@@ -185,79 +191,79 @@ export class EmpresasComponent implements OnInit {
   }
 
   EditarUsuario(Usr: Usuario) {
-    if ((this.auxUsuario.NombreUsuario != "") && (Usr.NombreUsuario != this.auxUsuario.NombreUsuario)){
-     Usr.NombreUsuario = this.auxUsuario.NombreUsuario;
+    if ((this.auxUsuario.NombreUsuario != "") && (Usr.NombreUsuario != this.auxUsuario.NombreUsuario)) {
+      Usr.NombreUsuario = this.auxUsuario.NombreUsuario;
     }
-    if ( ((this.auxUsuario.RutEmpresa != "") && (this.auxUsuario.RutEmpresa != "0")) && (Usr.RutEmpresa != this.auxUsuario.RutEmpresa)){
-     Usr.RutEmpresa = this.auxUsuario.RutEmpresa;
+    if (((this.auxUsuario.RutEmpresa != "") && (this.auxUsuario.RutEmpresa != "0")) && (Usr.RutEmpresa != this.auxUsuario.RutEmpresa)) {
+      Usr.RutEmpresa = this.auxUsuario.RutEmpresa;
     }
-    if ((this.auxUsuario.RutUsuario != "") && (Usr.RutUsuario != this.auxUsuario.RutUsuario)){
-     Usr.RutUsuario = this.auxUsuario.RutUsuario;
+    if ((this.auxUsuario.RutUsuario != "") && (Usr.RutUsuario != this.auxUsuario.RutUsuario)) {
+      Usr.RutUsuario = this.auxUsuario.RutUsuario;
     }
-   
-     this._servicio.EditarUsuario(Usr).subscribe(
-         result => {
-             this.obtenerUsuarios(Usr.RutEmpresa);
-             this.LimpiarAuxUsuario();
-         },
-         error => {
-             console.log(error);
-         }
-     );
-     this.obtenerUsuarios(Usr.RutEmpresa);
-   }
 
-   CambiarComboEmpresa(comboempresa){
+    this._servicio.EditarUsuario(Usr).subscribe(
+      result => {
+        this.obtenerUsuarios(Usr.RutEmpresa);
+        this.LimpiarAuxUsuario();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    this.obtenerUsuarios(Usr.RutEmpresa);
+  }
+
+  CambiarComboEmpresa(comboempresa) {
     this.auxUsuario.RutEmpresa = comboempresa
-   }
+  }
 
-   LimpiarAuxUsuario(){
-    this.auxUsuario.NombreUsuario ="";
-    this.auxUsuario.UserId ="";
-    this.auxUsuario.RutEmpresa ="";
-    this.auxUsuario.RutUsuario ="";
-    this.auxUsuario.Password ="";
-    
+  LimpiarAuxUsuario() {
+    this.auxUsuario.NombreUsuario = "";
+    this.auxUsuario.UserId = "";
+    this.auxUsuario.RutEmpresa = "";
+    this.auxUsuario.RutUsuario = "";
+    this.auxUsuario.Password = "";
+
   }
   CambiarPass(Usr: Usuario) {
-    
+
     if (Usr == null) {
       console.log("Selecione un Usuario");
-  
-  } else {
-    Usr.Password = this.auxUsuario.Password;
+
+    } else {
+      Usr.Password = this.auxUsuario.Password;
       this._servicio.CambiarPass(Usr).subscribe(
-          result => {
-              this.LimpiarAuxEmpresa();
-          },
-          error => {
-              console.log(error);
-          }
+        result => {
+          this.LimpiarAuxEmpresa();
+        },
+        error => {
+          console.log(error);
+        }
       );
-  }
     }
-    eliminarUsuario(Usr: Usuario) {
-      this.rutaux = Usr;
-      if (Usr == null) {
-          console.log("Selecione un Usuario");
-      } else {
-          this._servicio.DelUsuario(Usr).subscribe(
-              result => {
-                
-              },
-              error => {
-                  console.log(error);
-              }
-          );
-          this.obtenerUsuarios(this.rutaux.rutEmpresa);   
-      }
-      
+  }
+  eliminarUsuario(Usr: Usuario) {
+    this.rutaux = Usr;
+    if (Usr == null) {
+      console.log("Selecione un Usuario");
+    } else {
+      this._servicio.DelUsuario(Usr).subscribe(
+        result => {
+
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      this.obtenerUsuarios(this.rutaux.rutEmpresa);
+    }
+
   }
 
-    LimpiarAuxEmpresa(){
-      this.AuxEmpresa.NombreEmpresa ="";
-      this.AuxEmpresa.RutEmpresa ="";   
-    }
+  LimpiarAuxEmpresa() {
+    this.AuxEmpresa.NombreEmpresa = "";
+    this.AuxEmpresa.RutEmpresa = "";
+  }
 
   seleccionarPerfil(perfil) {
     this.seleccionPerfil = true;
