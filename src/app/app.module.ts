@@ -23,7 +23,7 @@ import { UsuariosComponent } from './components/contenido/usuarios/usuarios.comp
 import { DocumentosComponent } from './components/contenido/documentos/documentos.component';
 import { TipoDocumentosComponent } from './components/contenido/TipoDocumentos/TipoDocumentos.component';
 import { LoginComponent } from './components/login/login.component';
-import {NuevousuarioComponent} from './components/nuevousuario/nuevousuario.component';
+import { NuevousuarioComponent } from './components/nuevousuario/nuevousuario.component';
 
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider} from "angularx-social-login";

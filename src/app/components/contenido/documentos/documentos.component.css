@@ -74,3 +74,4 @@ input.form-control.mr-2{
 .no-padding{
   padding: 0px;
 }
+.panel-body {padding:0px !important;}
