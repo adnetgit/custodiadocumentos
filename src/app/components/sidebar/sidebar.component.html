@@ -52,7 +52,7 @@
     </ul>
   </nav>
 
-</div-->
+</div>
 <div class="navbar-default sidebar " role="navigation" >
   <div class="sidebar-nav navbar-collapse">
     <ul class="nav" id="side-menu">
@@ -67,7 +67,7 @@
             </button>
           </span>
         </div>
-        <!-- /input-group -->
+ 
       </li>
       <li>
         <a href="#">
@@ -80,7 +80,7 @@
           </li>
 
         </ul>
-        <!-- /.nav-second-level -->
+
       </li>
       <li>
         <a routerLink="/documentos"><i class="fa fa-file-text-o" aria-hidden="true"></i> Documentos</a>
@@ -112,12 +112,39 @@
                 <a routerLink="/tipodocumentos">Tipos de Documentos</a>
               </li>
             </ul>
-            <!-- /.nav-third-level -->
+
           </li>
         </ul>
-        <!-- /.nav-second-level -->
+
       </li>
     </ul>
   </div>
-  <!-- /.sidebar-collapse -->
+
+</div>
+-->
+
+<div class="d-flex">
+    <div class="sidebar sidebar-dark bg-dark">
+        <ul class="list-unstyled">
+            <li><a href="#"><i class="fa fa-fw fa-link"></i> Dashboard</a></li>
+            <li>
+                <a href="#sm_expand_1" data-toggle="collapse">
+                    <i class="fa fa-fw fa-link"></i> Expandable Menu Item
+                </a>
+                <ul id="sm_expand_1" class="list-unstyled collapse">
+                    <li><a href="#">Submenu Item</a></li>
+                    <li><a href="#">Submenu Item</a></li>
+
+                </ul>
+            </li>
+            <li><a routerLink="documentos"><i class="fa fa-fw fa-link"></i> Documentos</a></li>
+            <li><a routerLink="empresas"><i class="fa fa-fw fa-link"></i> Empresas</a></li>
+            <li><a routerLink="usuarios"><i class="fa fa-fw fa-link"></i> Usuarios</a></li>
+            <li><a routerLink="tipo"><i class="fa fa-fw fa-link"></i> tipo</a></li>
+        </ul>
+    </div>
+
+    <div class="content p-4  w-100">
+        <router-outlet></router-outlet>
+    </div>
 </div>

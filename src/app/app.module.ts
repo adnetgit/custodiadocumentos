@@ -27,6 +27,7 @@ import { NuevousuarioComponent } from './components/nuevousuario/nuevousuario.co
 
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider} from "angularx-social-login";
+import { SessionService } from './services/session.service';
 
 let config = new AuthServiceConfig([
   {
@@ -77,7 +78,8 @@ export function provideConfig() {
       useFactory: provideConfig
     },
     appRoutingProviders,
-    ServicioService,
+    ServicioService,,
+    SessionService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NgProgressInterceptor,

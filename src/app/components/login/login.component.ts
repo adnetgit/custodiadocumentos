@@ -6,6 +6,7 @@ import { ServicioService } from '../../services/servicio.service';
 import { RouterModule, Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { NuevoUsuario } from '../../entidades/login';
+import { SessionService } from '../../services/session.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService, 
     private _service: ServicioService, 
     private cd: ChangeDetectorRef,
-    private router:Router
+    private router:Router,
+    private _sesion:SessionService
   ) { }
 
   ngAfterViewChecke() {
@@ -93,8 +95,8 @@ export class LoginComponent implements OnInit {
     this._service.rutaUrl("")
   }
 login(){
-  sessionStorage.setItem('login','true');
-  this.router.navigateByUrl('/documentos');
+  this._sesion.setEstadoLogin("true");
+  this.router.navigateByUrl('/admin');
 }
 
 }

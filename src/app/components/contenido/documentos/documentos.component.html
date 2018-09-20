@@ -1,4 +1,4 @@
-<div class="card card-table">
+<div class="card card-table w-75">
     <div class="card-header">
         <div class="row">
             <div class="col-md-5 mt-2">
@@ -12,7 +12,7 @@
 
     </div>
     
-    <div class="card-body">
+    <div class="card-body shadow">
         <eui-tabs (tabClose)="cerrarTab($event)" (tabSelect)="obtenerDocumento($event)">
             <eui-tab-panel [title]="'Espacios'">
                  
@@ -23,8 +23,9 @@
                 </eui-datagrid>
 
                 <div class="pull-right p-2">
-                    <button type="button" class="btn btn-success btn-sm" >
-                            <i data-target="#modalAgregarEspacio" data-toggle="modal" (click)="limpiarDocumento()" class="fa fa-plus-circle text-success mas"></i>
+                    <button type="button" class="btn btn-success btn-sm"  data-target="#modalAgregarEspacio" data-toggle="modal" (click)="limpiarDocumento()" >
+                            <i class="fa fa-plus-circle"></i>
+                            Agregar Espacio
                     </button>
                     <button type="button" class="btn btn-primary btn-sm" (click)="seleccionarEspacio(espacioSeleccionado)">
                         <i class="fa fa-eye" aria-hidden="true"></i> Ver Espacio
