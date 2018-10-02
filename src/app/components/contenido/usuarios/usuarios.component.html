@@ -1,3 +1,81 @@
+<div class="card shadow">
+  <div class="card-header">
+    <h3>
+      <i class="fa fa-user-circle"></i> Administrar Usuarios
+      <button type="button" class="btn btn-sm btn-success">Agregar usuario</button>
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs mb-12" id="myTab" role="tablist">
+          <li class="nav-item" style="color: black">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Usuarios</a>
+          </li>
+          <li *ngFor="let tab of tabs" class="nav-item" style="color: black">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{tab.nombreUsuario}}
+              <i (click)="cerrarTab(tab)" class="fa fa-times cerrar" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body no-padding">
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <table class="table  table-hover ">
+              <thead>
+                <tr>
+                  <th>Nombre usuario</th>
+                  <th>Rut usuario</th>
+                  <th>Rut empresa</th>
+                  <th>accion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let usuario of usuarios" (dblclick)="agregarTab(usuario)" style="cursor: pointer;">
+                  <td>{{usuario.nombreUsuario}}</td>
+                  <td>{{usuario.rutUsuario}}</td>
+                  <td>{{usuario.rutEmpresa}}</td>
+                  <td>
+                    <button type="button" (click)="agregarTab(usuario)" class="btn btn-sm btn-info">ver</button>
+                    <button type="button" class="btn btn-sm btn-danger">eliminar</button>
+                    <button   type="button" class="btn btn-outline-success" (click)="seleccionarUsuario(usuarioSeleccionado)">
+                      <i class="fas fa-eye"></i> Ver Usuario
+                    </button>
+                    <button   type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modalCambiarPass">
+                        <i class="fas fa-eye"></i> Cambiar Contraseña
+                   </button>
+                   <button  type="button" class="btn btn-outline-danger">
+                      <i class="fas fa-trash"></i> Bloquear Usuario
+                    </button>
+                    <button   type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalEliminarUsuario">
+                      <i class="fas fa-trash"></i> Eliminar Usuario
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="card">
+              <div class="card-header">
+
+              </div>
+              <div class="card-body">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+
+
 <div class="card card-table bg-light">
   <div class="card-header">
     <div class="row">
@@ -212,7 +290,7 @@
   </div>
 </div>
 
-
+-->
 
 <!--Modal Agregar Usuario-->
 <div class="modal fade" id="modalAgregarUsr" tabindex="-1" role="dialog" aria-labelledby="AgregarUsuario" aria-hidden="true">
@@ -236,7 +314,7 @@
 
         <div class="row">
           <label>Password:
-            <eui-textbox [(ngModel)]="auxUsuario.Password" ></eui-textbox>
+            <eui-textbox [(ngModel)]="auxUsuario.Password"></eui-textbox>
             <eui-addon>
               <i class="fa fa-lock mr-1"></i>
             </eui-addon>
@@ -245,7 +323,7 @@
 
         <div class="row">
           <label>Rut Usuario:
-            <eui-textbox [(ngModel)]="auxUsuario.RutUsuario" ></eui-textbox>
+            <eui-textbox [(ngModel)]="auxUsuario.RutUsuario"></eui-textbox>
             <eui-addon>
               <i class="fa fa-lock mr-1"></i>
             </eui-addon>
@@ -254,13 +332,13 @@
 
         <div class="row">
           <label>Rut Empresa:
-            <eui-textbox [(ngModel)]="auxUsuario.RutEmpresa" ></eui-textbox>
+            <eui-textbox [(ngModel)]="auxUsuario.RutEmpresa"></eui-textbox>
             <eui-addon>
               <i class="fa fa-lock mr-1"></i>
             </eui-addon>
           </label>
         </div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-modal" (click)="AgregarUsuario()">Guardar Cambios</button>
@@ -309,13 +387,13 @@
 
         <div class="row">
           <label>Nueva Password:
-            <eui-textbox [(ngModel)]="auxUsuario.Password" ></eui-textbox>
+            <eui-textbox [(ngModel)]="auxUsuario.Password"></eui-textbox>
             <eui-addon>
               <i class="fa fa-user mr-1"></i>
             </eui-addon>
           </label>
         </div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-modal" (click)="CambiarPass(usuarioSeleccionado)">Guardar Cambios</button>
@@ -326,53 +404,53 @@
 
 <!--Modal Editar Usuario-->
 <div class="modal fade" id="modalEditarUsr" tabindex="-1" role="dialog" aria-labelledby="modalEditarUsr" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="nuevaEmpresa">Cambiar Contraseña</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nuevaEmpresa">Cambiar Contraseña</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <label>Nombre Usuario:
+            <eui-textbox [(ngModel)]="auxUsuario.NombreUsuario" [placeholder]="usuarioSeleccionado.nombreUsuario"></eui-textbox>
+            <eui-addon>
+              <i class="fa fa-user mr-1"></i>
+            </eui-addon>
+          </label>
         </div>
-        <div class="modal-body">
-            <div class="row">
-              <label>Nombre Usuario:
-                <eui-textbox [(ngModel)]="auxUsuario.NombreUsuario" [placeholder]="usuarioSeleccionado.nombreUsuario"></eui-textbox>
-                <eui-addon>
-                  <i class="fa fa-user mr-1"></i>
-                </eui-addon>
-              </label>
-            </div>
-    
-            <div class="row">
-              <label>Rut Usuario:
-                <eui-textbox [(ngModel)]="auxUsuario.RutUsuario" [placeholder]="usuarioSeleccionado.rutUsuario"></eui-textbox>
-                <eui-addon>
-                  <i class="fa fa-lock mr-1"></i>
-                </eui-addon>
-              </label>
-            </div>
-    
-            <div class="row">
-              <label>Empresa:
-                  <select #empresa (change)="CambiarComboEmpresa(empresa.value)" class="custom-select" id="inputEmpresa">
-                      <option value="0" selected>Escoger...</option>
-                      <option value="111.111.111">Claro</option>
-                      <option value="222.222.222">Vtr</option>
-                      <option value="333.333.333">Wom</option>
-                      <option value="444.444.444">Metlife</option>
-                      <option value="555.555.555">Jumbo</option>
-                      <option value="66.666.666-6">Entel</option>
-                      <option value="777.777.777">Lider</option>
-                  </select>
-                
-              </label>
-            </div>
-            
-          </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-modal" (click)="EditarUsuario(usuarioSeleccionado)">Guardar Cambios</button>
+
+        <div class="row">
+          <label>Rut Usuario:
+            <eui-textbox [(ngModel)]="auxUsuario.RutUsuario" [placeholder]="usuarioSeleccionado.rutUsuario"></eui-textbox>
+            <eui-addon>
+              <i class="fa fa-lock mr-1"></i>
+            </eui-addon>
+          </label>
         </div>
+
+        <div class="row">
+          <label>Empresa:
+            <select #empresa (change)="CambiarComboEmpresa(empresa.value)" class="custom-select" id="inputEmpresa">
+              <option value="0" selected>Escoger...</option>
+              <option value="111.111.111">Claro</option>
+              <option value="222.222.222">Vtr</option>
+              <option value="333.333.333">Wom</option>
+              <option value="444.444.444">Metlife</option>
+              <option value="555.555.555">Jumbo</option>
+              <option value="66.666.666-6">Entel</option>
+              <option value="777.777.777">Lider</option>
+            </select>
+
+          </label>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal" (click)="EditarUsuario(usuarioSeleccionado)">Guardar Cambios</button>
       </div>
     </div>
   </div>
+</div>

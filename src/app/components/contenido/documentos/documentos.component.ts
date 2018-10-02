@@ -5,7 +5,8 @@ import { Archivo } from '../../../entidades/archivo';
 import { TipoDocumento } from '../../../entidades/TipoDocumento';
 import { AtriTipoDocumento } from '../../../entidades/atriTipoDocumento';
 import Swal from 'sweetalert2'
-
+declare var jQuery:any;
+declare var $:any;
 @Component({
   selector: 'app-documentos',
   templateUrl: './documentos.component.html',
@@ -78,6 +79,7 @@ export class DocumentosComponent implements OnInit {
   public tituloModal: string = "";
   public aux = {};
   public tabs = [];
+  public tabSeleccionado: any = {}
 
   constructor(private _servicio: ServicioService, private cd: ChangeDetectorRef) { }
   /*
@@ -101,6 +103,46 @@ export class DocumentosComponent implements OnInit {
 
   }
 
+  //tabs***********************
+  seleccionarTab(tab) {
+    this.documentos = null;
+    this.obtenerTipoDoc();
+    console.log("NO cerrar este tab: ", tab);
+    this.tabSeleccionado = tab;
+    this._servicio.GetArchivos(tab).subscribe(
+      result => {
+        this.documentos = result;
+        console.log("Documentos: ", this.documentos);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+
+  }
+  agregarTab(espacio) {
+    let tabs = this.tabs.filter(filter => filter.bucketId == espacio.bucketId);
+    if (tabs.length == 0) {
+      this.tabs.push(espacio);
+    }
+
+  }
+  cerrarTab(tab) {
+    
+  //  $("#home-tab").attr("aria-expanded","true");
+  //  $("#home-tab").addClass("active show");
+    for (let i = 0; i < this.tabs.length; i++) {
+      if (this.tabs[i].bucketId == tab.bucketId) {
+        this.tabs.splice(i, 1);
+      }
+    }
+    let btn_home = document.getElementById("home-tab");
+    btn_home.click();
+
+    
+  }
+  //*********************************
   //Metodos para Bucket
   obtenerEspacios() {
     this.auxEspacio.BucketId = "-1";
@@ -117,6 +159,7 @@ export class DocumentosComponent implements OnInit {
       }
     );
   }
+
   agregarEspacios() {
     console.log(this.agregarEspacio);
     this._servicio.InsEspacio(this.agregarEspacio).subscribe(
@@ -172,19 +215,8 @@ export class DocumentosComponent implements OnInit {
 
   }
   //Metodos para Documento
-  obtenerDocumento(obj) {
-    this.documentos=[];
-    let archivo = this.espacios.filter(arch => arch.bucketId == obj.title);
-    console.log(archivo);
-    let ar:Archivo= {
-      ArchivoId: "",
-      BucketId: "",
-      TipoId: "",
-      NombreArchivo: "",
-      Extension: ""
-    }
-    ar.BucketId = obj.title;
-    this._servicio.GetArchivos(ar).subscribe(
+  obtenerDocumento(archivo) {
+    this._servicio.GetArchivos(archivo).subscribe(
       result => {
         console.log("Documentos: ", this.documentos);
         this.documentos = result;
@@ -207,13 +239,13 @@ export class DocumentosComponent implements OnInit {
     this.tituloModal = "Agregar Nuevo Documento";
     this.documento = {};
   }
-
-  cerrarTab(panel) {
-    if (panel.title == this.espacio.bucketId) {
-      this.seleccionEspacio = false;
+  /*
+    cerrarTab(panel) {
+      if (panel.title == this.espacio.bucketId) {
+        this.seleccionEspacio = false;
+      }
     }
-  }
-
+  */
   obtenerMetadatos(id: any) {
     switch (id) {
       case '0':

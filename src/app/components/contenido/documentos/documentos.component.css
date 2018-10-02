@@ -75,3 +75,16 @@ input.form-control.mr-2{
   padding: 0px;
 }
 .panel-body {padding:0px !important;}
+.mb-12{
+  margin-bottom: -12px;
+}
+.cerrar:hover{
+    color: red;
+}
+.nav-item{
+  margin-right: 5px;
+  color: black;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  border: 1px solid #dee2e6 !important;
+}

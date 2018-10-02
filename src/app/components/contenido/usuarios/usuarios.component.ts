@@ -44,6 +44,8 @@ export class UsuariosComponent implements OnInit {
   public usuarioSeleccionado: any = { "nombreUsuario": "", "rutUsuario": "", "rutEmpresa": "" };
   public seleccionUsuario: boolean = false;
   public seleccionPerfil: boolean = false;
+
+  public tabs:any =[];
   constructor(private _servicio: ServicioService) { }
 
 
@@ -53,7 +55,35 @@ export class UsuariosComponent implements OnInit {
     this.obtenerUsuarios();
 
   }
+//***tabs****************
+seleccionarTab(tab) {
+  
 
+
+}
+agregarTab(usuario) {
+  let tabs = this.tabs.filter(filter => filter.rutUsuario == usuario.rutUsuario);
+  if (tabs.length == 0) {
+    this.tabs.push(usuario);
+  }
+
+}
+cerrarTab(tab) {
+  
+//  $("#home-tab").attr("aria-expanded","true");
+//  $("#home-tab").addClass("active show");
+  for (let i = 0; i < this.tabs.length; i++) {
+    if (this.tabs[i].rutUsuario == tab.rutUsuario) {
+      this.tabs.splice(i, 1);
+    }
+  }
+  let btn_home = document.getElementById("home-tab");
+  btn_home.click();
+
+  
+}
+
+//////
 
   LimpiarAuxUsuario() {
     this.auxUsuario.NombreUsuario = "";
@@ -67,6 +97,7 @@ export class UsuariosComponent implements OnInit {
   obtenerUsuarios() {
     this._servicio.getUsuarios().subscribe(
       result => {
+        console.log(result);
         this.usuarios = result;
         this.data_filter = result;
       },
@@ -181,11 +212,11 @@ export class UsuariosComponent implements OnInit {
     this.seleccionPerfil = true;
     this.perfil = perfil;
   }
-
+/*
   cerrarTab(panel) {
     if (panel.title == this.usuario.nombreUsuario) {
       this.seleccionUsuario = false;
     }
   }
-
+*/
 }
