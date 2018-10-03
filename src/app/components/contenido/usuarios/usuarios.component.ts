@@ -97,7 +97,7 @@ cerrarTab(tab) {
   obtenerUsuarios() {
     this._servicio.getUsuarios().subscribe(
       result => {
-        console.log(result);
+        console.log("Usuarios: ",result);
         this.usuarios = result;
         this.data_filter = result;
       },

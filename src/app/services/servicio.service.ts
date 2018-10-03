@@ -20,6 +20,7 @@ export class ServicioService {
   private host: string = variable.back;
   private url: string = variable.local
   private apiDocumentos: string = 'api/Documentos';
+  private apiEmpresa: string = 'api/Empresa';
   private apiInsert: string = 'api/Insert';
   private apiUpdate: string = 'api/Update';
   private apiDelete: string = 'api/Delete';
@@ -27,6 +28,7 @@ export class ServicioService {
   private headerPost: any;
   private header: any;
   constructor(private httpClient: HttpClient, private _http: HttpClientModule) {
+    console.log(this.host);
     this.headerPost = new Headers({ 'Content-Type': 'application/json', "method": "post" });
     this.header = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     
@@ -43,9 +45,7 @@ export class ServicioService {
 
   }
 
-  urlGetPrueba(): Observable<any> {
-    return this.httpClient.get("https://jsonplaceholder.typicode.com/posts");
-  }
+
 
   //Crud Archivo
   GetArchivos(archivo: Archivo): Observable<any> {
@@ -54,7 +54,7 @@ export class ServicioService {
 
   //Crud Empresa
   getEmpresas(valor: any): Observable<any> {
-    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getEmpresas}`, valor, this.headerPost);
+    return this.httpClient.get(`${this.host}${this.apiEmpresa}${apiMethod.getEmpresas}`);
   }
   getEmpresaRut(rutusuario: any): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getEmpresaRut}` + rutusuario, rutusuario, this.headerPost);
@@ -90,7 +90,7 @@ export class ServicioService {
     return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getUsuariosEmpresa}` + rutempresa, rutempresa, this.headerPost);
   }
   getUsuarios(): Observable<any> {
-    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getUsuarios}`, this.headerPost);
+    return this.httpClient.get(`${this.host}${this.apiEmpresa}${apiMethod.getUsuarios}`);
   }
   InsUsuario(Usr: Usuario): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiInsert}${apiMethod.InsUsuario}`, JSON.stringify(Usr), this.header);

@@ -26,19 +26,9 @@ export class InicioComponent implements OnInit {
   constructor(private _servicio: ServicioService) { }
 
   ngOnInit() {
-    this.obtener();
+   
   }
-  obtener() {
-    this._servicio.urlGetPrueba().subscribe(
-      result => {
-        this.cols = result;
-        this.cols_filtro = result;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
+  
   filtro(a) {
 
     let filtro: any[] = this.cols_filtro.filter(filter => (
@@ -51,7 +41,7 @@ export class InicioComponent implements OnInit {
 
     if (a.target.value == "") {
 
-      this.obtener();
+     
 
     } else {
 

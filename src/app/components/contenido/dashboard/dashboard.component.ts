@@ -63,18 +63,7 @@ export class DashboardComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.obtener();
   }
 
-  obtener() {
-    this._servicio.urlGetPrueba().subscribe(
-      result => {
-          console.log(result);
-        this.dashboards = result;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
+
 }

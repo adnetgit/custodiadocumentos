@@ -79,6 +79,7 @@ export class EmpresasComponent implements OnInit {
   obtenerEmpresas() {
     this._servicio.getEmpresas(null).subscribe(
       result => {
+        console.log("Empresas: ",result);
         this.empresas = result;
         this.data_filter = result;
       },
