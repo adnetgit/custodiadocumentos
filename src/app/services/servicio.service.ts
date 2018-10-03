@@ -19,7 +19,7 @@ console.log(variable.local);
 export class ServicioService {
   private host: string = variable.back;
   private url: string = variable.local
-  private apiDocumentos: string = 'api/Documentos';
+  private apiDocumentos: string = 'api/Documento';
   private apiEmpresa: string = 'api/Empresa';
   private apiInsert: string = 'api/Insert';
   private apiUpdate: string = 'api/Update';
@@ -70,8 +70,8 @@ export class ServicioService {
   }
 
   //Crud Espacios
-  getEspacios(bucket: bucket): Observable<any> {
-    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getEspacios}`, JSON.stringify(bucket), this.header);
+  getEspacios(auxBuckets: bucket): Observable<any> {
+    return this.httpClient.get(`${this.host}${this.apiDocumentos}${apiMethod.getEspacios}`+ auxBuckets);
   }
 
   InsEspacio(bucket: bucket): Observable<any> {
@@ -87,7 +87,7 @@ export class ServicioService {
 
   //Crud Usuarios
   getUsuarioEmpresa(rutempresa: any): Observable<any> {
-    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getUsuariosEmpresa}` + rutempresa, rutempresa, this.headerPost);
+    return this.httpClient.post(`${this.host}${this.apiEmpresa}${apiMethod.getUsuariosEmpresa}` + rutempresa, rutempresa, this.headerPost);
   }
   getUsuarios(): Observable<any> {
     return this.httpClient.get(`${this.host}${this.apiEmpresa}${apiMethod.getUsuarios}`);
@@ -114,6 +114,9 @@ export class ServicioService {
   //Crud Tipo documento
   GetTipoDocumento(TipoDoc: TipoDocumento): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.GetTipoDocumento}`, JSON.stringify(TipoDoc), this.header);
+  } 
+  GetTipoDocumentoEmpresa(rutempresa): Observable<any> {
+    return this.httpClient.get(`${this.host}${this.apiEmpresa}${apiMethod.GetTipoDocumentoEmpresa}` + rutempresa);
   }
   InsTipoDocumento(TipoDoc: TipoDocumento): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiInsert}${apiMethod.InsTipoDocumento}`, JSON.stringify(TipoDoc), this.header);
@@ -146,7 +149,7 @@ const apiMethod = {
   getEmpresas: '/GetEmpresas',
   getEmpresaRut: '/GetEmpresa?rutusuario=',
 
-  getEspacios: '/GetEspacios?rutempresa=',
+  getEspacios: '/GetEspacios?auxBuckets=',
   InsEspacio: '/InsEspacio',
   UpdEspacio: '/UpdEspacio',
   DelEspacio: '/DelEspacio',
@@ -164,6 +167,7 @@ const apiMethod = {
   InsLogin: '/InsLogin',
 
   GetTipoDocumento: '/GetTipoDocumento',
+  GetTipoDocumentoEmpresa:'/GetTipoDocumentoEmpresa?rutempresa=',
   InsTipoDocumento: '/InsTipoDocumento',
   UpdTipoDocumento: '/UpdTipoDocumento',
   DelTipoDocumento: '/DelTipoDocumento',

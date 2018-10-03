@@ -3,6 +3,7 @@ import { ServicioService } from '../../../services/servicio.service';
 import { bucket } from '../../../entidades/bucket';
 import { Usuario } from '../../../entidades/usuario';
 import { Empresa } from '../../../entidades/empresa';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-empresas',
@@ -13,7 +14,7 @@ export class EmpresasComponent implements OnInit {
   public cols: any[] = [];
   public cols_filtro: any[] = [];
   public empresa: any = {};
-  public empresaSeleccionada: any = { "nombreEmpresa": "", "rutEmpresa": "" };
+  public empresaSeleccionada: any = { "Nombre_Empresa": "", "Rut_Empresa": "" };
   public empresas: any = [];
   public tituloModal: string = "";
   public data_filter: any = [];
@@ -29,9 +30,9 @@ export class EmpresasComponent implements OnInit {
     Password: ""
   };
   public usuario: any = {};
-  public usuarioSeleccionado: any = { "nombreUsuario": "", "rutUsuario": "", "rutEmpresa": "" };
+  public usuarioSeleccionado: any = { "NombreUsuario": "", "RutUsuario": "", "RutEmpresa": "" };
   public usuarios = [];
-
+  public selectedIndex: any = 0;
   public espacios = [];
   public auxEspacio: bucket = {
     BucketId: "",
@@ -39,14 +40,7 @@ export class EmpresasComponent implements OnInit {
     Region: ""
   }
   public rutaux: any;
-  public TiposDocs = [
-    { "nombre": "Boleta" },
-    { "nombre": "Factura" },
-    { "nombre": "Contrato" },
-    { "nombre": "Detalle" },
-    { "nombre": "Venta" },
-    { "nombre": "Indices Financieros" },
-    { "nombre": "Inventario" }];
+  public TiposDocs: any;
 
   public perfiles: any = [
     { "nombrePerfil": "Administrador" },
@@ -66,7 +60,9 @@ export class EmpresasComponent implements OnInit {
     RutEmpresa: "",
     NombreEmpresa: ""
   };
-
+  total: number = 0;
+  pageNumber = 1;
+  pageSize = 5;
 
   constructor(private _servicio: ServicioService) {
     this.data_filter = this.empresas;
@@ -79,8 +75,14 @@ export class EmpresasComponent implements OnInit {
   obtenerEmpresas() {
     this._servicio.getEmpresas(null).subscribe(
       result => {
-        console.log("Empresas: ",result);
+        console.log("Empresas: ", result);
         this.empresas = result;
+        for (let i = 0; i < this.empresas.length; i++) {
+          this.empresas[i].Total_Usuarios = this.empresas[i].Usuarios.length;
+          this.empresas[i].Total_Buckets = this.empresas[i].Buckets.length;
+
+        }
+        this.usuarios = this.empresas.Usuarios;
         this.data_filter = result;
       },
       error => {
@@ -89,12 +91,47 @@ export class EmpresasComponent implements OnInit {
     );
   }
 
-  obtenerEspacios(rutempresa: string) {
-    this.auxEspacio.RutEmpresa = rutempresa
-    this._servicio.getEspacios(this.auxEspacio).subscribe(
+  obtenerDatosEmpresa(empresa: any) {
+    this.obtenerUsuarios(empresa);
+    this.obtenerEspacios(empresa);
+    this.obtenerTipoDocumentoEmpresa(empresa);
+  }
+  obtenerTipoDocumentoEmpresa(empresa) {
+    let emp = this.empresas.filter(a => a.Nombre_Empresa == empresa.title);
+    this._servicio.GetTipoDocumentoEmpresa(emp[0].Rut_Empresa).subscribe(
       result => {
+        console.log("Tipo documento empresa: ", result);
+        this.TiposDocs = result;
+        for (let i = 0; i < this.TiposDocs.length; i++) {
+          this.TiposDocs[i].Nombre_Tipo = this.TiposDocs[i].Tipo.Nombre_Tipo;
+          
+        }
+      },
+      error => {
+        console.log(error);
+      }
+
+    );
+  }
+  obtenerUsuarios(obj: any) {
+    let emp = this.empresas.filter(a => a.Nombre_Empresa == obj.title);
+    this._servicio.getUsuarioEmpresa(emp[0].Rut_Empresa).subscribe(
+      result => {
+        console.log("Usuarios Empresa: ", result);
+        this.usuarios = result;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  obtenerEspacios(empresa) {
+    let emp = this.empresas.filter(a => a.Nombre_Empresa == empresa.title);
+    this._servicio.getEspacios(emp[0].Rut_Empresa).subscribe(
+      result => {
+        console.log("Espacios de empresa: ", result);
         this.espacios = result;
-        console.log(result);
+
       },
       error => {
         console.log(error);
@@ -135,21 +172,7 @@ export class EmpresasComponent implements OnInit {
 
 
 
-  obtenerUsuarios(obj: any) {
-    this.usuarios=[];
-    let rutEmpresa = this.tabEmpresa.filter(empresa => empresa.nombreEmpresa == obj.title);
-    console.log(rutEmpresa[0]);
-    this._servicio.getUsuarioEmpresa(rutEmpresa[0].rutEmpresa).subscribe(
-      result => {
-        console.log("Usuarios empresa:", result);
-        this.usuarios = result;
-        this.data_filter = result;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
+
 
   filtro(a) {
     let filtro: any[] = this.data_filter.filter(filter => (
@@ -174,7 +197,7 @@ export class EmpresasComponent implements OnInit {
     } else if (panel.title == this.usuario.nombreUsuario) {
       this.seleccionUsuario = false;
     }
-    this.usuarioSeleccionado = { "nombreUsuario": "", "rutUsuario": "", "rutEmpresa": "" };
+    this.usuarioSeleccionado = { "NombreUsuario": "", "RutUsuario": "", "RutEmpresa": "" };
   }
 
   editarEmpresa() {
