@@ -1,7 +1,6 @@
 import { Injectable, transition } from '@angular/core';
 import { HttpClientJsonpModule, HttpClient, HttpErrorResponse, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { ResponseContentType, Http } from '@angular/http';
 import { TipoDocumento } from '../entidades/TipoDocumento';
 import { AtriTipoDocumento } from '../entidades/atriTipoDocumento';
@@ -10,15 +9,12 @@ import { bucket } from '../entidades/bucket';
 import { Archivo } from '../entidades/archivo';
 import { Empresa } from '../entidades/empresa';
 
-declare function require(url: string);
-let variable = require('../../assets/Json/hostconfig.json');
-console.log(variable.local);
-
 
 @Injectable()
 export class ServicioService {
-  private host: string = variable.back;
-  private url: string = variable.local
+
+  private host: string = 'http://localhost:5000/';
+  private url:string = "http://localhost:4200/"
   private apiDocumentos: string = 'api/Documentos';
   private apiInsert: string = 'api/Insert';
   private apiUpdate: string = 'api/Update';
@@ -29,12 +25,10 @@ export class ServicioService {
   constructor(private httpClient: HttpClient, private _http: HttpClientModule) {
     this.headerPost = new Headers({ 'Content-Type': 'application/json', "method": "post" });
     this.header = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    
-
   }
 
   rutaUrl(pathname: string) {
-
+    
     if (pathname == "") {
       location.href = this.url;
     } else {
