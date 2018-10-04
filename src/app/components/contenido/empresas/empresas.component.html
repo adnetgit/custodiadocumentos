@@ -1,4 +1,4 @@
-<div class="card card-table">
+<div class="card card-table w83">
   <div class="card-header">
     <div class="row ">
       <div class="col-md-5 mt-2">
@@ -12,24 +12,53 @@
       </div>
     </div>
   </div>
+
   <div class="card-body">
-    <eui-tabs (tabClose)="cerrarTab($event)" (tabSelect)="obtenerUsuarios($event)">
+<<<<<<< HEAD
+    <eui-tabs (tabClose)="cerrarTab($event)" (tabSelect)="obtenerDatosEmpresa($event)">
       <eui-tab-panel [title]="'Empresas'">
-        <eui-datagrid [data]="empresas" selectionMode="single" [(selection)]="empresaSeleccionada" style="max-height:425px;">
-          <eui-grid-column field="nombreEmpresa" title="Nombre" align="center"></eui-grid-column>
-          <eui-grid-column field="rutEmpresa" title="Rut" align="center"></eui-grid-column>
+        <eui-datagrid [pagination]="true" [total]="total" [pageNumber]="pageNumber" [pageSize]="pageSize" [data]="empresas"
+          selectionMode="single" [(selection)]="empresaSeleccionada" style="max-height:425px;">
+          <eui-grid-column field="Nombre_Empresa" title="Nombre" align="left"></eui-grid-column>
+          <eui-grid-column field="Rut_Empresa" title="Rut" align="left"></eui-grid-column>
+          <eui-grid-column field="Total_Usuarios" title="Total usuarios" align="center"></eui-grid-column>
+          <eui-grid-column field="Total_Buckets" title="Total buckets" align="center"></eui-grid-column>
+=======
+    <eui-tabs (tabClose)="cerrarTab($event)" (tabSelect)="obtenerDatosEmpresa($event)" >
+      <eui-tab-panel [title]="'Empresas'">
+        <eui-datagrid                  [pagination]="true"
+       
+        [total]="total"
+        [pageNumber]="pageNumber"
+        [pageSize]="pageSize" [data]="empresas" selectionMode="single" [(selection)]="empresaSeleccionada" style="max-height:425px;">
+          <eui-grid-column field="Nombre_Empresa" title="Nombre" align="left"></eui-grid-column>
+          <eui-grid-column field="Rut_Empresa" title="Rut" align="left"></eui-grid-column>
+          <eui-grid-column field="Total_Usuarios" title="Total usuarios" align="center"></eui-grid-column>
+          <eui-grid-column field="Total_Buckets" title="Total buckets" align="center"></eui-grid-column>     
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
         </eui-datagrid>
+
+
         <div class="pull-right p-2">
-          <button [disabled]="!empresaSeleccionada.nombreEmpresa.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarEmpresa(empresaSeleccionada)">
+<<<<<<< HEAD
+          <button [disabled]="!empresaSeleccionada.Nombre_Empresa.length > 0" type="button" class="btn btn-primary btn-sm"
+            (click)="seleccionarEmpresa(empresaSeleccionada)">
+=======
+          <button [disabled]="!empresaSeleccionada.Nombre_Empresa.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarEmpresa(empresaSeleccionada)">
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
             <i class="fa fa-eye" aria-hidden="true"></i> Ver Empresa
           </button>
 
-          <button [disabled]="!empresaSeleccionada.rutEmpresa.length > 0" type="button" class="btn btn-danger btn-sm">
+          <button [disabled]="!empresaSeleccionada.Rut_Empresa.length > 0" type="button" class="btn btn-danger btn-sm">
             <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Empresa
           </button>
         </div>
       </eui-tab-panel>
-      <eui-tab-panel  *ngFor="let empresa of tabEmpresa;let i = index;" [closable]="true" [title]="empresa.nombreEmpresa">
+<<<<<<< HEAD
+      <eui-tab-panel *ngFor="let empresa of tabEmpresa;let i = index;" [closable]="true" [title]="empresa.Nombre_Empresa">
+=======
+      <eui-tab-panel  *ngFor="let empresa of tabEmpresa;let i = index;" [closable]="true" [title]="empresa.Nombre_Empresa">
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
         <div class="card card-table">
           <div class="card-header">
             <div class="row">
@@ -37,7 +66,7 @@
                 <label>Empresa</label>
               </div>
               <div class="col-md-2">
-                <label>: {{empresa.nombreEmpresa}}</label>
+                <label>: {{empresa.Nombre_Empresa}}</label>
               </div>
             </div>
             <div class="row">
@@ -45,12 +74,13 @@
                 <label>Rut</label>
               </div>
               <div class="col-md-2">
-                <label>: {{empresa.rutEmpresa}}</label>
+                <label>: {{empresa.Rut_Empresa}}</label>
               </div>
             </div>
 
             <div class="col-md-4" style="position:relative;right:-685px">
-              <button type="button" class="btn btn-info btn-sm" data-target="#modalEditarEmpresa" data-toggle="modal" (click)="editarEmpresa(empresaSeleccionada)">
+              <button type="button" class="btn btn-info btn-sm" data-target="#modalEditarEmpresa" data-toggle="modal"
+                (click)="editarEmpresa(empresaSeleccionada)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Empresa
               </button>
             </div>
@@ -61,31 +91,48 @@
             <eui-tabs>
               <eui-tab-panel [title]="'Usuarios'">
                 <eui-datagrid [data]="usuarios" selectionMode="single" [(selection)]="usuarioSeleccionado" style="max-height:425px">
-                  <eui-grid-column field="nombreUsuario" title="Nombre" align="center"></eui-grid-column>
-                  <eui-grid-column field="rutUsuario" title="Rut" align="center"></eui-grid-column>
+                  <eui-grid-column field="NombreUsuario" title="Nombre" align="left"></eui-grid-column>
+                  <eui-grid-column field="RutUsuario" title="Rut" align="left"></eui-grid-column>
 
                 </eui-datagrid>
                 <div class="pull-right p-2">
-                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarUsuario(usuarioSeleccionado)">
+<<<<<<< HEAD
+                  <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-primary btn-sm"
+                    (click)="seleccionarUsuario(usuarioSeleccionado)">
                     <i class="fa fa-eye" aria-hidden="true"></i> Ver Usuario
                   </button>
 
-                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-info btn-sm" data-target="#modal"
-                    data-toggle="modal" data-target="#modalCambiarPass">
-                    <i class="fa fa-lock" aria-hidden="true"></i> Cambiar Contraseña
+                  <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-info btn-sm"
+                    data-target="#modal" data-toggle="modal" data-target="#modalCambiarPass">
+=======
+                  <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarUsuario(usuarioSeleccionado)">
+                    <i class="fa fa-eye" aria-hidden="true"></i> Ver Usuario
                   </button>
 
+                  <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-info btn-sm" data-target="#modal"
+                    data-toggle="modal" data-target="#modalCambiarPass">
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
+                    <i class="fa fa-lock" aria-hidden="true"></i> Cambiar Contraseña
+                  </button>
+                  
 
-                  <button [disabled]="!usuarioSeleccionado.nombreUsuario.length > 0" type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+<<<<<<< HEAD
+                  <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-danger btn-sm"
+                    data-toggle="modal" data-target="#modalEliminarUsuario">
+=======
+
+                  <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                     data-target="#modalEliminarUsuario">
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
                     <i class="fa fa-trash" aria-hidden="true"></i> Eliminar Usuario
                   </button>
                 </div>
               </eui-tab-panel>
+              
               <eui-tab-panel [title]="'Espacios'">
                 <eui-datagrid [data]="espacios" selectionMode="single" [(selection)]="espacioSeleccionado" style="max-height:425px">
-                  <eui-grid-column field="bucketId" title="Bucket" align="center"></eui-grid-column>
-                  <eui-grid-column field="region" title="Region" align="center"></eui-grid-column>
+                  <eui-grid-column field="Bucket_Id" title="Bucket" align="center"></eui-grid-column>
+                  <eui-grid-column field="Region" title="Region" align="center"></eui-grid-column>
                 </eui-datagrid>
                 <br>
                 <div class="pull-right p-2">
@@ -109,7 +156,8 @@
                   </div>
                   <div class="card body">
                     <div class="input-group my-2 col-md-10 offset-1">
-                      <input type="text" class="form-control" placeholder="XXXX-XXXX-XXXX" aria-label="Key" aria-describedby="basic-addon2">
+                      <input type="text" class="form-control" placeholder="XXXX-XXXX-XXXX" aria-label="Key"
+                        aria-describedby="basic-addon2">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">
                           <i class="fa fa-sync"></i>
@@ -123,7 +171,7 @@
               </eui-tab-panel>
               <eui-tab-panel [title]="'Tipos de documentos'">
                 <eui-datagrid [data]="TiposDocs" selectionMode="single" [(selection)]="tipoSeleccionado">
-                  <eui-grid-column field="nombre" title="Nombre" align="center"></eui-grid-column>
+                  <eui-grid-column field="Nombre_Tipo" title="Nombre" align="left"></eui-grid-column>
                 </eui-datagrid>
                 <br>
                 <div class="pull-right p-2">
@@ -171,7 +219,8 @@
             </div>
 
             <div class="col-md-4" style="position:relative;right:-685px">
-              <button type="button" class="btn btn-info btn-sm" data-target="#modalEditarUsuario" data-toggle="modal" (click)="editarUsuario(usuarioSeleccionado)">
+              <button type="button" class="btn btn-info btn-sm" data-target="#modalEditarUsuario" data-toggle="modal"
+                (click)="editarUsuario(usuarioSeleccionado)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Usuario
               </button>
             </div>
@@ -199,14 +248,14 @@
               <eui-tab-panel [title]="'Actividades'">
                 <div class="row">
                   <div class="col-md-3">
-                      <div class="card">
-                          <div class="card-header">
-                              <h5>Último Inicio de sesión</h5>
-                          </div>
-                          <div class="card-body">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5>Último Inicio de sesión</h5>
+                      </div>
+                      <div class="card-body">
 
-                          </div>
-                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-md-3"></div>
                   <div class="col-md-3"></div>
@@ -342,7 +391,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <div>
           <div class="row">
             <label>Nombre Empresa:
               <eui-textbox [(ngModel)]="AuxEmpresa.NombreEmpresa" [placeholder]="empresaSeleccionada.nombreEmpresa"></eui-textbox>
@@ -362,7 +411,7 @@
           <div class="row pt-2">
 
           </div>
-        </form>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-modal" (click)="EditarEmpresa(empresaSeleccionada)">Guardar Cambios</button>
@@ -467,7 +516,8 @@
   </div>
 </div>
 
-<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="eliminarUsuario" aria-hidden="true">
+<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="eliminarUsuario"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -484,7 +534,8 @@
   </div>
 </div>
 
-<div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="eliminarUsuario" aria-hidden="true">
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="eliminarUsuario"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

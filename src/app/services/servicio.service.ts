@@ -1,6 +1,7 @@
 import { Injectable, transition } from '@angular/core';
 import { HttpClientJsonpModule, HttpClient, HttpErrorResponse, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+
 import { ResponseContentType, Http } from '@angular/http';
 import { TipoDocumento } from '../entidades/TipoDocumento';
 import { AtriTipoDocumento } from '../entidades/atriTipoDocumento';
@@ -9,13 +10,16 @@ import { bucket } from '../entidades/bucket';
 import { Archivo } from '../entidades/archivo';
 import { Empresa } from '../entidades/empresa';
 
+declare function require(url: string);
+let variable = require('../../assets/Json/hostconfig.json');
+
 
 @Injectable()
 export class ServicioService {
-
-  private host: string = 'http://localhost:5000/';
-  private url:string = "http://localhost:4200/"
-  private apiDocumentos: string = 'api/Documentos';
+  private host: string = variable.back;
+  private url: string = variable.local
+  private apiDocumentos: string = 'api/Documento';
+  private apiEmpresa: string = 'api/Empresa';
   private apiInsert: string = 'api/Insert';
   private apiUpdate: string = 'api/Update';
   private apiDelete: string = 'api/Delete';
@@ -28,7 +32,7 @@ export class ServicioService {
   }
 
   rutaUrl(pathname: string) {
-    
+
     if (pathname == "") {
       location.href = this.url;
     } else {
@@ -37,9 +41,7 @@ export class ServicioService {
 
   }
 
-  urlGetPrueba(): Observable<any> {
-    return this.httpClient.get("https://jsonplaceholder.typicode.com/posts");
-  }
+
 
   //Crud Archivo
   GetArchivos(archivo: Archivo): Observable<any> {
@@ -48,7 +50,7 @@ export class ServicioService {
 
   //Crud Empresa
   getEmpresas(valor: any): Observable<any> {
-    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getEmpresas}`, valor, this.headerPost);
+    return this.httpClient.get(`${this.host}${this.apiEmpresa}${apiMethod.getEmpresas}`);
   }
   getEmpresaRut(rutusuario: any): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getEmpresaRut}` + rutusuario, rutusuario, this.headerPost);
@@ -64,8 +66,12 @@ export class ServicioService {
   }
 
   //Crud Espacios
-  getEspacios(bucket: bucket): Observable<any> {
-    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getEspacios}`, JSON.stringify(bucket), this.header);
+  getEspacios(auxBuckets: bucket): Observable<any> {
+<<<<<<< HEAD
+    return this.httpClient.get(`${this.host}${this.apiDocumentos}${apiMethod.getEspacios}` + auxBuckets);
+=======
+    return this.httpClient.get(`${this.host}${this.apiDocumentos}${apiMethod.getEspacios}`+ auxBuckets);
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
   }
 
   InsEspacio(bucket: bucket): Observable<any> {
@@ -81,10 +87,10 @@ export class ServicioService {
 
   //Crud Usuarios
   getUsuarioEmpresa(rutempresa: any): Observable<any> {
-    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getUsuariosEmpresa}` + rutempresa, rutempresa, this.headerPost);
+    return this.httpClient.post(`${this.host}${this.apiEmpresa}${apiMethod.getUsuariosEmpresa}` + rutempresa, rutempresa, this.headerPost);
   }
   getUsuarios(): Observable<any> {
-    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.getUsuarios}`, this.headerPost);
+    return this.httpClient.get(`${this.host}${this.apiEmpresa}${apiMethod.getUsuarios}`);
   }
   InsUsuario(Usr: Usuario): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiInsert}${apiMethod.InsUsuario}`, JSON.stringify(Usr), this.header);
@@ -106,8 +112,17 @@ export class ServicioService {
 
 
   //Crud Tipo documento
+<<<<<<< HEAD
+  GetTipoDocumento(tipodoc: any): Observable<any> {
+    return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.GetTipoDocumento}` + tipodoc, tipodoc, this.headerPost);
+  }
+=======
   GetTipoDocumento(TipoDoc: TipoDocumento): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.GetTipoDocumento}`, JSON.stringify(TipoDoc), this.header);
+  } 
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
+  GetTipoDocumentoEmpresa(rutempresa): Observable<any> {
+    return this.httpClient.get(`${this.host}${this.apiEmpresa}${apiMethod.GetTipoDocumentoEmpresa}` + rutempresa);
   }
   InsTipoDocumento(TipoDoc: TipoDocumento): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiInsert}${apiMethod.InsTipoDocumento}`, JSON.stringify(TipoDoc), this.header);
@@ -123,6 +138,7 @@ export class ServicioService {
   GetAtriTipoDocumento(AtriTipoDoc: AtriTipoDocumento): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.GetAtriTipoDocumento}`, JSON.stringify(AtriTipoDoc), this.header);
   }
+
   InsAtriTipoDocumento(AtriTipoDoc: AtriTipoDocumento): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiInsert}${apiMethod.InsAtriTipoDocumento}`, JSON.stringify(AtriTipoDoc), this.header);
   }
@@ -133,14 +149,15 @@ export class ServicioService {
     return this.httpClient.post(`${this.host}${this.apiDelete}${apiMethod.DelAtriTipoDocumento}`, JSON.stringify(AtriTipoDoc), this.header);
   }
 
-}
+}        
+
 const apiMethod = {
   GetArchivos: '/GetArchivos',
   GetNombreEmpresa: '/GetNombreEmpresa?usr=',
   getEmpresas: '/GetEmpresas',
   getEmpresaRut: '/GetEmpresa?rutusuario=',
 
-  getEspacios: '/GetEspacios?rutempresa=',
+  getEspacios: '/GetEspacios?auxBuckets=',
   InsEspacio: '/InsEspacio',
   UpdEspacio: '/UpdEspacio',
   DelEspacio: '/DelEspacio',
@@ -157,7 +174,13 @@ const apiMethod = {
 
   InsLogin: '/InsLogin',
 
+<<<<<<< HEAD
+  GetTipoDocumento: '/GetTipoDocumento?tipodoc=',
+  GetTipoDocumentoEmpresa: '/GetTipoDocumentoEmpresa?rutempresa=',
+=======
   GetTipoDocumento: '/GetTipoDocumento',
+  GetTipoDocumentoEmpresa:'/GetTipoDocumentoEmpresa?rutempresa=',
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
   InsTipoDocumento: '/InsTipoDocumento',
   UpdTipoDocumento: '/UpdTipoDocumento',
   DelTipoDocumento: '/DelTipoDocumento',

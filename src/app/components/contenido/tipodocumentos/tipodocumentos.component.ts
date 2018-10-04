@@ -11,8 +11,11 @@ import { AtriTipoDocumento } from '../../../entidades/atriTipoDocumento';
 export class TipoDocumentosComponent implements OnInit {
 
     public seleccionTipoDoc: boolean = false;
+    public tiposDocsSeleccionado: any = { "Nombre_Tipo": "", "Tipo_Id": "" };
     public tiposDocs: any = [];
     public tipoDoc: any = {};
+    public tabTipoDoc: any = [];
+
 
     public auxTipoDoc: TipoDocumento = {
         TipoId: "",
@@ -29,6 +32,7 @@ export class TipoDocumentosComponent implements OnInit {
 
 
     public seleccionAtriTiposDocs: boolean = false;
+    public atriTiposDocsSeleccionado: any = { "Nombre_Atributo": "", "Tipo_Id": "" };
     public atriTiposDocs: any = [];
     public atriTipoDoc: any = {};
     public auxAtriTipoDoc: AtriTipoDocumento = {
@@ -49,23 +53,17 @@ export class TipoDocumentosComponent implements OnInit {
 
 
     public data_filter: any = [];
+    total: number = 0;
+    pageNumber = 1;
+    pageSize = 5;
 
 
 
-    constructor(private _servicio: ServicioService, private cd: ChangeDetectorRef) { }
+    constructor(private _servicio: ServicioService, private cd: ChangeDetectorRef) {
+        this.data_filter = this.tiposDocs;
+    }
 
-    ngAfterViewChecke() {
-        this.cd.detectChanges();
-    }
-    ngAfterViewInit() {
-        this.cd.detectChanges();
-    }
-    ngAfterContentChecked() {
-        this.cd.detectChanges();
-    }
-    ngAfterContentInit() {
-        this.cd.detectChanges();
-    }
+
 
     ngOnInit() {
         this.obtenerTiposDocs();
@@ -73,17 +71,28 @@ export class TipoDocumentosComponent implements OnInit {
 
     //Metodos para Tipo de Documento
     obtenerTiposDocs() {
-        this.auxTipoDoc.TipoId = "-1";
-        this._servicio.GetTipoDocumento(this.auxTipoDoc).subscribe(
+        this._servicio.GetTipoDocumento("").subscribe(
             result => {
-                console.log(result);
+                console.log("Tipo documento: ", result);
                 this.tiposDocs = result;
-                this.data_filter = result;
             },
             error => {
                 console.log(error);
             }
         );
+    }
+
+    obtenerDatosTipoDoc(tipodoc: any) {
+        let aux: any;
+        let cont: any = 0;
+
+        while (tipodoc.title == this.tabTipoDoc[cont].Nombre_Tipo) {
+            aux = this.tabTipoDoc[cont].Tipo_Id
+            cont = cont + 1;
+        }
+        this.obtenerAtriTiposDocs(aux);
+
+
     }
 
     agregarTiposDocs() {
@@ -130,20 +139,22 @@ export class TipoDocumentosComponent implements OnInit {
         }
     }
 
-    seleccionarTiposDocs(fila) {
-        if (fila == null) {
-            console.log("Seleccione un tipo de documento")
-        } else {
-            this.seleccionTipoDoc = true;
-            this.tipoDoc = fila;
-            this.auxAtriTipoDoc.TipoId = this.tipoDoc.tipoId;
-            this.obtenerAtriTiposDocs(this.auxAtriTipoDoc);
-        }
+    seleccionarTiposDocs(tipodoc) {
+        this.tabTipoDoc.push(tipodoc);
+        console.log("tipo doc seleccionada", tipodoc);
+        this.seleccionTipoDoc = true;
+        this.tipoDoc = tipodoc;
+        //this.auxAtriTipoDoc.TipoId = this.tipoDoc.tipoId;
+        //this.obtenerAtriTiposDocs(this.auxAtriTipoDoc);
+
     }
 
 
     //Metodos para Atributos 
-    obtenerAtriTiposDocs(AtriTipoDoc: AtriTipoDocumento) {
+    obtenerAtriTiposDocs(obj: any) {
+        console.log(obj);
+        
+        /*let atri = this.tiposDocs.filter(a => a.Tipo == obj.title);
         this._servicio.GetAtriTipoDocumento(AtriTipoDoc).subscribe(
             result => {
                 this.atriTiposDocs = result;
@@ -158,7 +169,7 @@ export class TipoDocumentosComponent implements OnInit {
             error => {
                 console.log(error);
             }
-        );
+        );*/
 
     }
 

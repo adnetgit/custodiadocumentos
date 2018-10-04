@@ -1,12 +1,12 @@
-<div class="card card-table">
+<div class="card card-table w83">
   <div class="card-header">
     <div class="row">
-      <div class="col-md-7 ">
+      <div class="col-md-5 mt-2 ">
         <h3>
           <i class="fa fa-archive"></i> Administrar Tipo de Documentos
         </h3>
       </div>
-      <div class="col-md-4 offset-1">
+      <div class="col-md-3 offset-4">
         <input type="text" class="form-control buscar" (keyup)="filtro($event)" placeholder="Buscar Tipo de Documento">
       </div>
     </div>
@@ -15,37 +15,42 @@
 
   <div class="card-body">
 
-    <eui-tabs (tabClose)="cerrarTab($event)">
+    <eui-tabs (tabClose)="cerrarTab($event)" (tabSelect)="obtenerDatosTipoDoc($event)">
       <eui-tab-panel [title]="'Tipo de Documentos'">
 
         <div class="row pt-3">
           <div class="col-md-3 ">
-            <input type="text" [(ngModel)]="agregarTipoDoc.NombreTipo" class="form-control" placeholder="Nuevo Tipo de Documento" required>
+            <input type="text" [(ngModel)]="agregarTipoDoc.NombreTipo" class="form-control" placeholder="Nuevo Tipo de Documento"
+              required>
           </div>
           <h3 (click)="agregarTiposDocs()">
             <i class="fa fa-plus-circle text-success mas lineal ml-1"></i>
           </h3>
         </div>
 
-        <eui-datagrid [data]="tiposDocs" selectionMode="single" [(selection)]="tiposDocsSeleccionado" style="max-height:425px;">
-          <eui-grid-column field="tipoId" title="Id" align="center"></eui-grid-column>
-          <eui-grid-column field="nombreTipo" title="Nombre" align="center"></eui-grid-column>
+        <eui-datagrid [pagination]="true" [total]="total" [pageNumber]="pageNumber" [pageSize]="pageSize" [data]="tiposDocs"
+          selectionMode="single" [(selection)]="tiposDocsSeleccionado" style="max-height:425px;">
+          <eui-grid-column field="Tipo_Id" title="Id" align="center"></eui-grid-column>
+          <eui-grid-column field="Nombre_Tipo" title="Nombre" align="center"></eui-grid-column>
+          <eui-grid-column field="Total_Atributos" title="Total atributos" align="center"></eui-grid-column>
+
         </eui-datagrid>
         <br>
 
-        <div class="pull-right">
-          <button type="button" class="btn btn-outline-success" (click)="seleccionarTiposDocs(tiposDocsSeleccionado)">
+        <div class="pull-right p-2 ">
+          <button [disabled]="!tiposDocsSeleccionado.Tipo_Id.length > 0" type="button" class="btn btn-outline-success btn-sm"
+            (click)="seleccionarTiposDocs(tiposDocsSeleccionado)">
             <i class="fas fa-eye"></i> Ver Tipo Documento
           </button>
 
-          <button type="button" class="btn btn-outline-danger" data-toggle="modal"
-            data-target="#modalEliminarTipoDoc">
+          <button [disabled]="!tiposDocsSeleccionado.Tipo_Id.length > 0" type="button" class="btn btn-outline-danger btn-sm"
+            data-toggle="modal" data-target="#modalEliminarTipoDoc">
             <i class="fas fa-trash"></i> Eliminar Tipo Documento
           </button>
         </div>
       </eui-tab-panel>
 
-      <eui-tab-panel *ngIf="seleccionTipoDoc" [closable]="true" [title]="tipoDoc.nombreTipo">
+      <eui-tab-panel *ngFor="let tipoDoc of tabTipoDoc;let i = index;" [closable]="true" [title]="tipoDoc.Nombre_Tipo">
         <div class="card card-table">
           <div class="card-header">
             <div class="row">
@@ -53,7 +58,7 @@
                 <label>ID</label>
               </div>
               <div class="col-md-2">
-                <label>: {{tipoDoc.tipoId}}</label>
+                <label>: {{tipoDoc.Tipo_Id}}</label>
               </div>
             </div>
             <div class="row">
@@ -61,24 +66,25 @@
                 <label>Tipo</label>
               </div>
               <div class="col-md-2">
-                <label>: {{tipoDoc.nombreTipo}}</label>
+                <label>: {{tipoDoc.Nombre_Tipo}}</label>
               </div>
             </div>
 
-            <div class="col-md-4" style="position:relative;right:-635px">
-              <button type="button" class="btn btn-outline-info" data-target="#modalTipoDoc" data-toggle="modal">
-                <i class="fas fa-edit"></i> Editar Tipo Documento
+            <div class="col-md-4" style="position:relative;right:-685px">
+              <button type="button" class="btn btn-outline-info btn-sm" data-target="#modalTipoDoc" data-toggle="modal">
+                <i class="fas fa-edit"></i> Tipo Documento
               </button>
             </div>
           </div>
 
-          <div class="card-body">
+          <div class="card-body no-padding ">
             <eui-tabs>
               <eui-tab-panel [title]="'Atributo'">
 
                 <div class="row pt-3">
                   <div class="col-md-3 ">
-                    <input type="text" [(ngModel)]="agregarAtriTipoDoc.NombreAtributo" class="form-control text lineal " align="center" placeholder="Nuevo Atributo">
+                    <input type="text" [(ngModel)]="agregarAtriTipoDoc.NombreAtributo" class="form-control text lineal "
+                      align="center" placeholder="Nuevo Atributo">
                   </div>
                   <div class="col-md-4 mt-1 lineal">
                     <eui-checkbox [(ngModel)]="agregarAtriTipoDoc.Obligatorio" class="mt-1"></eui-checkbox>
@@ -94,20 +100,22 @@
                   </div>
                 </div>
 
-                <eui-datagrid [data]="atriTiposDocs" selectionMode="single" [(selection)]="atriTiposDocsSeleccionado" style="max-height:425px">
+                <eui-datagrid [data]="atriTiposDocs" selectionMode="single" [(selection)]="atriTiposDocsSeleccionado"
+                  style="max-height:425px">
                   <eui-grid-column field="nombreAtributo" title="Nombre" align="center"></eui-grid-column>
                   <eui-grid-column field="ObligatorioNombre" title="Obligatorio" align="center"></eui-grid-column>
                 </eui-datagrid>
                 <br>
                 <div class="pull-right">
-                  <button type="button" class="btn btn-outline-info" data-target="#modalEditarAtributo"
-                    data-toggle="modal" (click)="seleccionarAtributo(atriTiposDocsSeleccionado)">
+                  <button [disabled]="!atriTiposDocsSeleccionado.Tipo_Id.length > 0" type="button" class="btn btn-outline-info" data-target="#modalEditarAtributo" data-toggle="modal"
+                    (click)="seleccionarAtributo(atriTiposDocsSeleccionado)">
                     <i class="fas fa-edit"></i> Editar Atributo
                   </button>
-                  <button type="button" class="btn btn-outline-danger" data-target="#modalConfEliminarAtributo"
+                  <button [disabled]="!atriTiposDocsSeleccionado.Tipo_Id.length > 0" type="button" class="btn btn-outline-danger" data-target="#modalConfEliminarAtributo"
                     data-toggle="modal">
                     <i class="fas fa-trash"></i> Eliminar Atributo
                   </button>
+
                 </div>
               </eui-tab-panel>
             </eui-tabs>
@@ -161,7 +169,8 @@
 </div>
 
 <!--Modal Confirmacion Editar Tipo Documento-->
-<div class="modal fade" id="modalConfEditarTipoDoc" tabindex="-1" role="dialog" aria-labelledby="editarTipoDoc" aria-hidden="true">
+<div class="modal fade" id="modalConfEditarTipoDoc" tabindex="-1" role="dialog" aria-labelledby="editarTipoDoc"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -179,7 +188,8 @@
 </div>
 
 <!--Modal Confirmacion Eliminar Tipo Documento-->
-<div class="modal fade" id="modalEliminarTipoDoc" tabindex="-1" role="dialog" aria-labelledby="eliminarTipoDoc" aria-hidden="true">
+<div class="modal fade" id="modalEliminarTipoDoc" tabindex="-1" role="dialog" aria-labelledby="eliminarTipoDoc"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -203,7 +213,8 @@
 
 
 <!-- Modal Editar Atributo-->
-<div class="modal fade" id="modalEditarAtributo" tabindex="-1" role="dialog" aria-labelledby="editarAtributo" aria-hidden="true">
+<div class="modal fade" id="modalEditarAtributo" tabindex="-1" role="dialog" aria-labelledby="editarAtributo"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -220,7 +231,8 @@
         </div>
         <div class="row">
           <label>Nombre Tipo de Documento:
-            <eui-textbox [(ngModel)]="editarAtriTipoDoc.NombreAtributo" [value]="atriTipoDoc.nombreAtributo" placeholder="Nombre"></eui-textbox>
+            <eui-textbox [(ngModel)]="editarAtriTipoDoc.NombreAtributo" [value]="atriTipoDoc.nombreAtributo"
+              placeholder="Nombre"></eui-textbox>
           </label>
         </div>
         <div class="row">
@@ -239,7 +251,8 @@
 </div>
 
 <!--Modal Confirmacion Editar Atributo-->
-<div class="modal fade" id="modalConfEditarAtributo" tabindex="-1" role="dialog" aria-labelledby="editarAtributo" aria-hidden="true">
+<div class="modal fade" id="modalConfEditarAtributo" tabindex="-1" role="dialog" aria-labelledby="editarAtributo"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -257,7 +270,8 @@
 </div>
 
 <!--Modal Confirmacion Eliminar Tipo Documento-->
-<div class="modal fade" id="modalConfEliminarAtributo" tabindex="-1" role="dialog" aria-labelledby="eliminarAtributo" aria-hidden="true">
+<div class="modal fade" id="modalConfEliminarAtributo" tabindex="-1" role="dialog" aria-labelledby="eliminarAtributo"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

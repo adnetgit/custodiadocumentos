@@ -1,79 +1,6 @@
-<div class="card shadow">
-  <div class="card-header">
-    <h3>
-      <i class="fa fa-user-circle"></i> Administrar Usuarios
-      <button type="button" class="btn btn-sm btn-success">Agregar usuario</button>
-    </h3>
-  </div>
-  <div class="card-body">
-    <div class="card">
-      <div class="card-header">
-        <ul class="nav nav-tabs mb-12" id="myTab" role="tablist">
-          <li class="nav-item" style="color: black">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Usuarios</a>
-          </li>
-          <li *ngFor="let tab of tabs" class="nav-item" style="color: black">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{tab.nombreUsuario}}
-              <i (click)="cerrarTab(tab)" class="fa fa-times cerrar" aria-hidden="true"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="card-body no-padding">
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <table class="table  table-hover ">
-              <thead>
-                <tr>
-                  <th>Nombre usuario</th>
-                  <th>Rut usuario</th>
-                  <th>Rut empresa</th>
-                  <th>accion</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let usuario of usuarios" (dblclick)="agregarTab(usuario)" style="cursor: pointer;">
-                  <td>{{usuario.nombreUsuario}}</td>
-                  <td>{{usuario.rutUsuario}}</td>
-                  <td>{{usuario.rutEmpresa}}</td>
-                  <td>
-                    <button type="button" (click)="agregarTab(usuario)" class="btn btn-sm btn-info">ver</button>
-                    <button type="button" class="btn btn-sm btn-danger">eliminar</button>
-                    <button   type="button" class="btn btn-outline-success" (click)="seleccionarUsuario(usuarioSeleccionado)">
-                      <i class="fas fa-eye"></i> Ver Usuario
-                    </button>
-                    <button   type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modalCambiarPass">
-                        <i class="fas fa-eye"></i> Cambiar Contraseña
-                   </button>
-                   <button  type="button" class="btn btn-outline-danger">
-                      <i class="fas fa-trash"></i> Bloquear Usuario
-                    </button>
-                    <button   type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalEliminarUsuario">
-                      <i class="fas fa-trash"></i> Eliminar Usuario
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="card">
-              <div class="card-header">
-
-              </div>
-              <div class="card-body">
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
-<!--
+
 
 
 <div class="card card-table bg-light">
@@ -290,7 +217,7 @@
   </div>
 </div>
 
--->
+
 
 <!--Modal Agregar Usuario-->
 <div class="modal fade" id="modalAgregarUsr" tabindex="-1" role="dialog" aria-labelledby="AgregarUsuario" aria-hidden="true">

@@ -85,4 +85,11 @@ input.text {
   display: inline-block;  
 }
 
+.w83{
+  width: 83%
+}
+.no-padding{
+  padding: 0px;
+}
+
 
