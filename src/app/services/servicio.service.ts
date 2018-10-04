@@ -27,6 +27,7 @@ export class ServicioService {
   private headerPost: any;
   private header: any;
   constructor(private httpClient: HttpClient, private _http: HttpClientModule) {
+    console.log(this.host);
     this.headerPost = new Headers({ 'Content-Type': 'application/json', "method": "post" });
     this.header = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   }
@@ -68,7 +69,11 @@ export class ServicioService {
   //Crud Espacios
   getEspacios(auxBuckets: bucket): Observable<any> {
 <<<<<<< HEAD
+<<<<<<< HEAD
     return this.httpClient.get(`${this.host}${this.apiDocumentos}${apiMethod.getEspacios}` + auxBuckets);
+=======
+    return this.httpClient.get(`${this.host}${this.apiDocumentos}${apiMethod.getEspacios}`+ auxBuckets);
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
 =======
     return this.httpClient.get(`${this.host}${this.apiDocumentos}${apiMethod.getEspacios}`+ auxBuckets);
 >>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
@@ -120,6 +125,9 @@ export class ServicioService {
   GetTipoDocumento(TipoDoc: TipoDocumento): Observable<any> {
     return this.httpClient.post(`${this.host}${this.apiDocumentos}${apiMethod.GetTipoDocumento}`, JSON.stringify(TipoDoc), this.header);
   } 
+<<<<<<< HEAD
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
+=======
 >>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
   GetTipoDocumentoEmpresa(rutempresa): Observable<any> {
     return this.httpClient.get(`${this.host}${this.apiEmpresa}${apiMethod.GetTipoDocumentoEmpresa}` + rutempresa);
@@ -180,6 +188,9 @@ const apiMethod = {
 =======
   GetTipoDocumento: '/GetTipoDocumento',
   GetTipoDocumentoEmpresa:'/GetTipoDocumentoEmpresa?rutempresa=',
+<<<<<<< HEAD
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
+=======
 >>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
   InsTipoDocumento: '/InsTipoDocumento',
   UpdTipoDocumento: '/UpdTipoDocumento',

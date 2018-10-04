@@ -100,6 +100,7 @@ export class EmpresasComponent implements OnInit {
   obtenerTipoDocumentoEmpresa(empresa) {
     let emp = this.empresas.filter(a => a.Nombre_Empresa == empresa.title);
     this._servicio.GetTipoDocumentoEmpresa(emp[0].Rut_Empresa).subscribe(
+<<<<<<< HEAD
       result => {
         console.log("Tipo documento empresa: ", result);
         this.TiposDocs = result;
@@ -118,6 +119,26 @@ export class EmpresasComponent implements OnInit {
     let emp = this.empresas.filter(a => a.Nombre_Empresa == obj.title);
     this._servicio.getUsuarioEmpresa(emp[0].Rut_Empresa).subscribe(
       result => {
+=======
+      result => {
+        console.log("Tipo documento empresa: ", result);
+        this.TiposDocs = result;
+        for (let i = 0; i < this.TiposDocs.length; i++) {
+          this.TiposDocs[i].Nombre_Tipo = this.TiposDocs[i].Tipo.Nombre_Tipo;
+          
+        }
+      },
+      error => {
+        console.log(error);
+      }
+
+    );
+  }
+  obtenerUsuarios(obj: any) {
+    let emp = this.empresas.filter(a => a.Nombre_Empresa == obj.title);
+    this._servicio.getUsuarioEmpresa(emp[0].Rut_Empresa).subscribe(
+      result => {
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
         console.log("Usuarios Empresa: ", result);
         this.usuarios = result;
       },
@@ -175,6 +196,10 @@ export class EmpresasComponent implements OnInit {
 =======
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
 
 
 >>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527

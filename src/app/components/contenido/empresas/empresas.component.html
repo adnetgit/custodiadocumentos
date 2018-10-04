@@ -15,6 +15,7 @@
 
   <div class="card-body">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <eui-tabs (tabClose)="cerrarTab($event)" (tabSelect)="obtenerDatosEmpresa($event)">
       <eui-tab-panel [title]="'Empresas'">
         <eui-datagrid [pagination]="true" [total]="total" [pageNumber]="pageNumber" [pageSize]="pageSize" [data]="empresas"
@@ -24,6 +25,8 @@
           <eui-grid-column field="Total_Usuarios" title="Total usuarios" align="center"></eui-grid-column>
           <eui-grid-column field="Total_Buckets" title="Total buckets" align="center"></eui-grid-column>
 =======
+=======
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
     <eui-tabs (tabClose)="cerrarTab($event)" (tabSelect)="obtenerDatosEmpresa($event)" >
       <eui-tab-panel [title]="'Empresas'">
         <eui-datagrid                  [pagination]="true"
@@ -35,14 +38,21 @@
           <eui-grid-column field="Rut_Empresa" title="Rut" align="left"></eui-grid-column>
           <eui-grid-column field="Total_Usuarios" title="Total usuarios" align="center"></eui-grid-column>
           <eui-grid-column field="Total_Buckets" title="Total buckets" align="center"></eui-grid-column>     
+<<<<<<< HEAD
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
+=======
 >>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
         </eui-datagrid>
 
 
         <div class="pull-right p-2">
 <<<<<<< HEAD
+<<<<<<< HEAD
           <button [disabled]="!empresaSeleccionada.Nombre_Empresa.length > 0" type="button" class="btn btn-primary btn-sm"
             (click)="seleccionarEmpresa(empresaSeleccionada)">
+=======
+          <button [disabled]="!empresaSeleccionada.Nombre_Empresa.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarEmpresa(empresaSeleccionada)">
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
 =======
           <button [disabled]="!empresaSeleccionada.Nombre_Empresa.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarEmpresa(empresaSeleccionada)">
 >>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
@@ -55,7 +65,11 @@
         </div>
       </eui-tab-panel>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <eui-tab-panel *ngFor="let empresa of tabEmpresa;let i = index;" [closable]="true" [title]="empresa.Nombre_Empresa">
+=======
+      <eui-tab-panel  *ngFor="let empresa of tabEmpresa;let i = index;" [closable]="true" [title]="empresa.Nombre_Empresa">
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
 =======
       <eui-tab-panel  *ngFor="let empresa of tabEmpresa;let i = index;" [closable]="true" [title]="empresa.Nombre_Empresa">
 >>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
@@ -97,6 +111,7 @@
                 </eui-datagrid>
                 <div class="pull-right p-2">
 <<<<<<< HEAD
+<<<<<<< HEAD
                   <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-primary btn-sm"
                     (click)="seleccionarUsuario(usuarioSeleccionado)">
                     <i class="fa fa-eye" aria-hidden="true"></i> Ver Usuario
@@ -105,6 +120,8 @@
                   <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-info btn-sm"
                     data-target="#modal" data-toggle="modal" data-target="#modalCambiarPass">
 =======
+=======
+>>>>>>> cfd15dbe4b85260b74e9b0a5a335418e71160527
                   <button [disabled]="!usuarioSeleccionado.NombreUsuario.length > 0" type="button" class="btn btn-primary btn-sm" (click)="seleccionarUsuario(usuarioSeleccionado)">
                     <i class="fa fa-eye" aria-hidden="true"></i> Ver Usuario
                   </button>
